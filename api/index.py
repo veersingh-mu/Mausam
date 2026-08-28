@@ -10,3 +10,6 @@ for p in [repo_root, backend_dir, current_dir]:
         sys.path.insert(0, p)
 
 from backend.api_gateway.app.main import app
+
+# Export for ASGI serverless runtime
+app = app
