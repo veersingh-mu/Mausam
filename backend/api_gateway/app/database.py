@@ -9,21 +9,28 @@ from sqlalchemy import Column, String, Integer, Boolean, DateTime, JSON, Foreign
 
 logger = logging.getLogger("mausam.db")
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "sqlite+aiosqlite:///./mausam_local.db"
-)
+is_vercel = os.getenv("VERCEL") == "1" or os.getenv("AWS_LAMBDA_FUNCTION_NAME") is not None
+default_db = "sqlite+aiosqlite:////tmp/mausam_local.db" if is_vercel else "sqlite+aiosqlite:///./mausam_local.db"
 
-# If using PostgreSQL in docker, postgresql+asyncpg://...
+DATABASE_URL = os.getenv("DATABASE_URL", default_db)
+
+# If in serverless and local sqlite path is given, redirect to writable /tmp
+if is_vercel and "sqlite" in DATABASE_URL and not DATABASE_URL.startswith("sqlite+aiosqlite:////tmp/"):
+    DATABASE_URL = "sqlite+aiosqlite:////tmp/mausam_local.db"
+
+# If using PostgreSQL in docker/production, postgresql+asyncpg://...
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
 elif DATABASE_URL.startswith("postgresql://") and "+asyncpg" not in DATABASE_URL:
     DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
 
+connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+
 engine = create_async_engine(
     DATABASE_URL,
     echo=False,
-    future=True
+    future=True,
+    connect_args=connect_args
 )
 
 AsyncSessionLocal = sessionmaker(

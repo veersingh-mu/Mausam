@@ -12,15 +12,18 @@ for p in [repo_root, backend_dir, current_dir]:
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse
 
 from backend.api_gateway.app.database import init_db
 from backend.api_gateway.app.routers import feed, personas, layout, alerts, auth
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Initialize Database tables
-    await init_db()
+    # Startup: Initialize Database tables (graceful on serverless cold starts)
+    try:
+        await init_db()
+    except Exception as e:
+        print(f"Non-fatal DB init note: {e}")
     yield
     # Shutdown
 
@@ -49,11 +52,15 @@ app.include_router(alerts.router)
 
 STATIC_INDEX_PATH = os.path.join(os.path.dirname(__file__), "static", "index.html")
 
-@app.get("/", response_class=FileResponse)
+@app.get("/", response_class=HTMLResponse)
 async def serve_root_dashboard():
     if os.path.exists(STATIC_INDEX_PATH):
-        return FileResponse(STATIC_INDEX_PATH)
-    return {"message": "Mausam API Gateway Online. Visit /docs for Swagger UI."}
+        try:
+            with open(STATIC_INDEX_PATH, "r", encoding="utf-8") as f:
+                return HTMLResponse(content=f.read())
+        except Exception as e:
+            print(f"Static read error: {e}")
+    return HTMLResponse(content="<h1>Mausam API Gateway Online</h1><p>Visit <a href='/docs'>/docs</a> for Swagger UI.</p>")
 
 @app.get("/health")
 async def health_check():
