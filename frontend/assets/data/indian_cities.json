@@ -1,0 +1,290 @@
+[
+  {
+    "city_name": "New Delhi",
+    "state": "Delhi",
+    "latitude": 28.6139,
+    "longitude": 77.2090,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Mumbai",
+    "state": "Maharashtra",
+    "latitude": 19.0760,
+    "longitude": 72.8777,
+    "is_popular": true,
+    "region": "West"
+  },
+  {
+    "city_name": "Bengaluru",
+    "state": "Karnataka",
+    "latitude": 12.9716,
+    "longitude": 77.5946,
+    "is_popular": true,
+    "region": "South"
+  },
+  {
+    "city_name": "Chennai",
+    "state": "Tamil Nadu",
+    "latitude": 13.0827,
+    "longitude": 80.2707,
+    "is_popular": true,
+    "region": "South"
+  },
+  {
+    "city_name": "Kolkata",
+    "state": "West Bengal",
+    "latitude": 22.5726,
+    "longitude": 88.3639,
+    "is_popular": true,
+    "region": "East"
+  },
+  {
+    "city_name": "Hyderabad",
+    "state": "Telangana",
+    "latitude": 17.3850,
+    "longitude": 78.4867,
+    "is_popular": true,
+    "region": "South"
+  },
+  {
+    "city_name": "Pune",
+    "state": "Maharashtra",
+    "latitude": 18.5204,
+    "longitude": 73.8567,
+    "is_popular": true,
+    "region": "West"
+  },
+  {
+    "city_name": "Ahmedabad",
+    "state": "Gujarat",
+    "latitude": 23.0225,
+    "longitude": 72.5714,
+    "is_popular": true,
+    "region": "West"
+  },
+  {
+    "city_name": "Jaipur",
+    "state": "Rajasthan",
+    "latitude": 26.9124,
+    "longitude": 75.7873,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Lucknow",
+    "state": "Uttar Pradesh",
+    "latitude": 26.8467,
+    "longitude": 80.9462,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Chandigarh",
+    "state": "Chandigarh",
+    "latitude": 30.7333,
+    "longitude": 76.7794,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Kochi",
+    "state": "Kerala",
+    "latitude": 9.9312,
+    "longitude": 76.2673,
+    "is_popular": true,
+    "region": "South"
+  },
+  {
+    "city_name": "Bhopal",
+    "state": "Madhya Pradesh",
+    "latitude": 23.2599,
+    "longitude": 77.4126,
+    "is_popular": true,
+    "region": "Central"
+  },
+  {
+    "city_name": "Surat",
+    "state": "Gujarat",
+    "latitude": 21.1702,
+    "longitude": 72.8311,
+    "is_popular": true,
+    "region": "West"
+  },
+  {
+    "city_name": "Nagpur",
+    "state": "Maharashtra",
+    "latitude": 21.1458,
+    "longitude": 79.0882,
+    "is_popular": true,
+    "region": "Central"
+  },
+  {
+    "city_name": "Indore",
+    "state": "Madhya Pradesh",
+    "latitude": 22.7196,
+    "longitude": 75.8577,
+    "is_popular": true,
+    "region": "Central"
+  },
+  {
+    "city_name": "Patna",
+    "state": "Bihar",
+    "latitude": 25.5941,
+    "longitude": 85.1376,
+    "is_popular": true,
+    "region": "East"
+  },
+  {
+    "city_name": "Guwahati",
+    "state": "Assam",
+    "latitude": 26.1445,
+    "longitude": 91.7362,
+    "is_popular": true,
+    "region": "Northeast"
+  },
+  {
+    "city_name": "Thiruvananthapuram",
+    "state": "Kerala",
+    "latitude": 8.5241,
+    "longitude": 76.9366,
+    "is_popular": true,
+    "region": "South"
+  },
+  {
+    "city_name": "Shimla",
+    "state": "Himachal Pradesh",
+    "latitude": 31.1048,
+    "longitude": 77.1734,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Srinagar",
+    "state": "Jammu & Kashmir",
+    "latitude": 34.0837,
+    "longitude": 74.7973,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Goa (Panaji)",
+    "state": "Goa",
+    "latitude": 15.4909,
+    "longitude": 73.8278,
+    "is_popular": true,
+    "region": "West"
+  },
+  {
+    "city_name": "Varanasi",
+    "state": "Uttar Pradesh",
+    "latitude": 25.3176,
+    "longitude": 82.9739,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Bhubaneswar",
+    "state": "Odisha",
+    "latitude": 20.2961,
+    "longitude": 85.8245,
+    "is_popular": true,
+    "region": "East"
+  },
+  {
+    "city_name": "Dehradun",
+    "state": "Uttarakhand",
+    "latitude": 30.3165,
+    "longitude": 78.0322,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Amritsar",
+    "state": "Punjab",
+    "latitude": 31.6340,
+    "longitude": 74.8723,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Visakhapatnam",
+    "state": "Andhra Pradesh",
+    "latitude": 17.6868,
+    "longitude": 83.2185,
+    "is_popular": true,
+    "region": "South"
+  },
+  {
+    "city_name": "Raipur",
+    "state": "Chhattisgarh",
+    "latitude": 21.2514,
+    "longitude": 81.6296,
+    "is_popular": false,
+    "region": "Central"
+  },
+  {
+    "city_name": "Ranchi",
+    "state": "Jharkhand",
+    "latitude": 23.3441,
+    "longitude": 85.3096,
+    "is_popular": false,
+    "region": "East"
+  },
+  {
+    "city_name": "Coimbatore",
+    "state": "Tamil Nadu",
+    "latitude": 11.0168,
+    "longitude": 76.9558,
+    "is_popular": false,
+    "region": "South"
+  },
+  {
+    "city_name": "Vadodara",
+    "state": "Gujarat",
+    "latitude": 22.3072,
+    "longitude": 73.1812,
+    "is_popular": false,
+    "region": "West"
+  },
+  {
+    "city_name": "Agra",
+    "state": "Uttar Pradesh",
+    "latitude": 27.1767,
+    "longitude": 78.0081,
+    "is_popular": true,
+    "region": "North"
+  },
+  {
+    "city_name": "Mysuru",
+    "state": "Karnataka",
+    "latitude": 12.2958,
+    "longitude": 76.6394,
+    "is_popular": false,
+    "region": "South"
+  },
+  {
+    "city_name": "Shillong",
+    "state": "Meghalaya",
+    "latitude": 25.5788,
+    "longitude": 91.8933,
+    "is_popular": false,
+    "region": "Northeast"
+  },
+  {
+    "city_name": "Port Blair",
+    "state": "Andaman & Nicobar Islands",
+    "latitude": 11.6234,
+    "longitude": 92.7265,
+    "is_popular": false,
+    "region": "Islands"
+  },
+  {
+    "city_name": "Ludhiana",
+    "state": "Punjab",
+    "latitude": 30.9010,
+    "longitude": 75.8573,
+    "is_popular": false,
+    "region": "North"
+  }
+]

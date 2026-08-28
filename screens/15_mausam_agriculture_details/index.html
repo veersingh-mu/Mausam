@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agriculture Weather Card - Mausam App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant": "#c6c5d4",
+                        "secondary-fixed-dim": "#96ccff",
+                        "on-primary-fixed-variant": "#343d96",
+                        "surface-container-low": "#f3f3f3",
+                        "tertiary-fixed": "#94f990",
+                        "on-background": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#00436a",
+                        "secondary-fixed": "#cee5ff",
+                        "tertiary": "#002104",
+                        "surface-bright": "#f9f9f9",
+                        "surface-tint": "#4c56af",
+                        "on-surface-variant": "#454652",
+                        "on-tertiary-container": "#48ab4d",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#bdc2ff",
+                        "surface-dim": "#dadada",
+                        "on-primary-fixed": "#000767",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-container": "#1a237e",
+                        "on-secondary-fixed-variant": "#004a75",
+                        "on-surface": "#1a1c1c",
+                        "surface": "#f9f9f9",
+                        "secondary": "#00639a",
+                        "tertiary-container": "#00390a",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#51b2fe",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "outline": "#767683",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e0e0ff",
+                        "background": "#f9f9f9",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "inverse-on-surface": "#f1f1f1",
+                        "primary": "#000666",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#002204",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary-fixed": "#001d32",
+                        "surface-container": "#eeeeee",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#bdc2ff",
+                        "on-primary-container": "#8690ee"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "container-margin": "20px",
+                        "base": "8px",
+                        "internal-padding": "16px",
+                        "widget-gap": "12px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-temp": ["Inter"],
+                        "body-md": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "headline-lg-mobile": ["28px", { lineHeight: "34px", fontWeight: "700" }],
+                        "display-temp": ["64px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "data-mono": ["14px", { lineHeight: "20px", letterSpacing: "-0.01em", fontWeight: "500" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .agri-card-shadow {
+            box-shadow: 0 4px 12px rgba(26, 35, 126, 0.08);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface text-body-md min-h-screen flex items-center justify-center p-container-margin md:p-8">
+<main class="w-full max-w-4xl mx-auto">
+<!-- Agriculture Weather Card -->
+<article class="bg-surface-container-lowest rounded-3xl p-internal-padding md:p-6 agri-card-shadow relative overflow-hidden group">
+<!-- Header Section -->
+<header class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">agriculture</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Agriculture Dashboard</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Real-time insights for your fields</p>
+</div>
+</div>
+<button aria-label="More options" class="w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-widget-gap">
+<!-- Soil Moisture Widget -->
+<section class="bg-surface-container-low rounded-xl p-internal-padding flex flex-col justify-between border border-surface-variant h-full">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Soil Moisture</h3>
+<span class="material-symbols-outlined text-tertiary-fixed-dim">water_drop</span>
+</div>
+<div class="flex items-center justify-center flex-1">
+<!-- Simple Gauge Representation -->
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-variant" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-secondary-container transition-all duration-1000 ease-out" cx="50" cy="50" fill="transparent" id="moisture-ring" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="87.92" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-primary font-bold">65%</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Optimal</span>
+</div>
+</div>
+</div>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-center mt-2">Depth: 15cm</p>
+</section>
+<!-- Alerts & Tips Column -->
+<div class="flex flex-col gap-widget-gap h-full">
+<!-- Frost Alert Widget -->
+<section class="bg-surface-container-low rounded-xl p-internal-padding border border-surface-variant flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed-dim flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-1">Frost Alert Status</h3>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Low Risk Tonight</span>
+</div>
+</div>
+</section>
+<!-- Farmer's Tip Widget -->
+<section class="bg-secondary-fixed rounded-xl p-internal-padding border border-secondary flex-1 flex flex-col">
+<div class="flex items-center gap-2 mb-3 text-primary">
+<span class="material-symbols-outlined">lightbulb</span>
+<h3 class="font-label-caps text-label-caps font-bold uppercase tracking-wider">Farmer's Tip</h3>
+</div>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant leading-relaxed">
+                            Current soil temperature (14°C) and moisture (65%) create an ideal window for sowing wheat. Consider planting within the next 48 hours for optimal germination.
+                        </p>
+</section>
+</div>
+<!-- Rainfall Prediction Chart -->
+<section class="md:col-span-2 bg-surface-container-low rounded-xl p-internal-padding border border-surface-variant">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">7-Day Rainfall Prediction (mm)</h3>
+<span class="material-symbols-outlined text-secondary">rainy</span>
+</div>
+<div class="h-40 flex items-end justify-between gap-2 px-2 pb-6 relative">
+<!-- Chart Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pb-6 pointer-events-none">
+<div class="w-full h-px bg-outline-variant opacity-30"></div>
+<div class="w-full h-px bg-outline-variant opacity-30"></div>
+<div class="w-full h-px bg-outline-variant opacity-30"></div>
+<div class="w-full h-px bg-outline-variant opacity-30"></div>
+</div>
+<!-- Bar 1 -->
+<div class="w-full max-w-[40px] flex flex-col items-center gap-2 z-10 group/bar">
+<div class="font-data-mono text-data-mono text-on-surface-variant opacity-0 group-hover/bar:opacity-100 transition-opacity">0</div>
+<div class="w-full bg-secondary-fixed rounded-t-sm h-1 transition-all duration-300 group-hover/bar:bg-secondary-container"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 absolute bottom-0">Mon</div>
+</div>
+<!-- Bar 2 -->
+<div class="w-full max-w-[40px] flex flex-col items-center gap-2 z-10 group/bar">
+<div class="font-data-mono text-data-mono text-on-surface-variant opacity-0 group-hover/bar:opacity-100 transition-opacity">12</div>
+<div class="w-full bg-secondary rounded-t-sm h-[40%] transition-all duration-300 group-hover/bar:bg-secondary-container"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 absolute bottom-0">Tue</div>
+</div>
+<!-- Bar 3 -->
+<div class="w-full max-w-[40px] flex flex-col items-center gap-2 z-10 group/bar">
+<div class="font-data-mono text-data-mono text-on-surface-variant opacity-0 group-hover/bar:opacity-100 transition-opacity">25</div>
+<div class="w-full bg-secondary rounded-t-sm h-[80%] transition-all duration-300 group-hover/bar:bg-secondary-container"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 absolute bottom-0 font-bold text-primary">Wed</div>
+</div>
+<!-- Bar 4 -->
+<div class="w-full max-w-[40px] flex flex-col items-center gap-2 z-10 group/bar">
+<div class="font-data-mono text-data-mono text-on-surface-variant opacity-0 group-hover/bar:opacity-100 transition-opacity">5</div>
+<div class="w-full bg-secondary-fixed rounded-t-sm h-[20%] transition-all duration-300 group-hover/bar:bg-secondary-container"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 absolute bottom-0">Thu</div>
+</div>
+<!-- Bar 5 -->
+<div class="w-full max-w-[40px] flex flex-col items-center gap-2 z-10 group/bar">
+<div class="font-data-mono text-data-mono text-on-surface-variant opacity-0 group-hover/bar:opacity-100 transition-opacity">0</div>
+<div class="w-full bg-secondary-fixed rounded-t-sm h-1 transition-all duration-300 group-hover/bar:bg-secondary-container"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 absolute bottom-0">Fri</div>
+</div>
+<!-- Bar 6 -->
+<div class="w-full max-w-[40px] flex flex-col items-center gap-2 z-10 group/bar">
+<div class="font-data-mono text-data-mono text-on-surface-variant opacity-0 group-hover/bar:opacity-100 transition-opacity">2</div>
+<div class="w-full bg-secondary-fixed rounded-t-sm h-[10%] transition-all duration-300 group-hover/bar:bg-secondary-container"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 absolute bottom-0">Sat</div>
+</div>
+<!-- Bar 7 -->
+<div class="w-full max-w-[40px] flex flex-col items-center gap-2 z-10 group/bar">
+<div class="font-data-mono text-data-mono text-on-surface-variant opacity-0 group-hover/bar:opacity-100 transition-opacity">8</div>
+<div class="w-full bg-secondary-fixed rounded-t-sm h-[30%] transition-all duration-300 group-hover/bar:bg-secondary-container"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2 absolute bottom-0">Sun</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Subtle decorative background element -->
+<div class="absolute -bottom-24 -right-24 w-64 h-64 bg-tertiary-fixed-dim opacity-10 rounded-full blur-3xl pointer-events-none"></div>
+</article>
+</main>
+<script>
+        // Simple animation for the soil moisture ring on load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const ring = document.getElementById('moisture-ring');
+                if(ring) {
+                    // 65% of 251.2 (circumference) = 163.28. 251.2 - 163.28 = 87.92
+                    ring.style.strokeDashoffset = '87.92';
+                }
+            }, 100);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mausam - Personalize Your Weather</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "on-tertiary-fixed": "#002204",
+                        "on-primary-fixed-variant": "#343d96",
+                        "on-surface-variant": "#454652",
+                        "on-error-container": "#93000a",
+                        "secondary": "#00639a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#bdc2ff",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-container": "#51b2fe",
+                        "surface-container-low": "#f3f3f3",
+                        "surface": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "outline": "#767683",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-fixed-variant": "#004a75",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed": "#000767",
+                        "secondary-fixed": "#cee5ff",
+                        "surface-container-highest": "#e2e2e2",
+                        "tertiary-container": "#00390a",
+                        "primary": "#000666",
+                        "surface-tint": "#4c56af",
+                        "on-background": "#1a1c1c",
+                        "surface-dim": "#dadada",
+                        "primary-fixed": "#e0e0ff",
+                        "outline-variant": "#c6c5d4",
+                        "tertiary-fixed": "#94f990",
+                        "primary-container": "#1a237e",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#bdc2ff",
+                        "on-primary-container": "#8690ee",
+                        "on-secondary-fixed": "#001d32",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary-container": "#00436a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#002104",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "secondary-fixed-dim": "#96ccff",
+                        "surface-container": "#eeeeee",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-container": "#48ab4d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "widget-gap": "12px",
+                        "base": "8px",
+                        "internal-padding": "16px",
+                        "container-margin": "20px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "display-temp": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "display-temp": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom toggle animation for tiles */
+        .tile-checkbox:checked + div {
+            border-color: #1a237e; /* primary-container */
+            background-color: #f1f1f1; /* inverse-on-surface */
+            box-shadow: 0 4px 12px rgba(26, 35, 126, 0.15);
+        }
+        
+        .tile-checkbox:checked + div .tile-icon,
+        .tile-checkbox:checked + div .tile-label {
+            color: #000666; /* primary */
+        }
+        
+        .tile-checkbox:checked + div .check-indicator {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .check-indicator {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        * {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased md:items-center md:justify-center">
+<!-- Main Container -->
+<main class="flex-1 flex flex-col w-full max-w-md mx-auto h-screen md:h-auto md:min-h-[800px] bg-surface-container-lowest md:rounded-xl md:shadow-[0_8px_30px_rgba(26,35,126,0.08)] overflow-hidden relative">
+<!-- Header -->
+<header class="pt-12 pb-6 px-container-margin z-10 bg-surface-container-lowest sticky top-0">
+<div class="mb-4">
+<span class="material-symbols-outlined text-primary text-3xl">weather_mix</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-2">Personalize Your Weather</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Select the profiles that best describe you. We'll tailor alerts and data to fit your daily needs.</p>
+</header>
+<!-- Grid Content -->
+<div class="flex-1 overflow-y-auto px-container-margin pb-32">
+<div class="grid grid-cols-2 gap-widget-gap">
+<!-- Tile 1: Health-conscious -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="health"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">ecg_heart</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Health-conscious</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+<!-- Tile 2: Fitness -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="fitness"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">directions_run</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Fitness</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+<!-- Tile 3: Beach/Surf -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="beach"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">surfing</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Beach/Surf</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+<!-- Tile 4: Traveler -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="traveler"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">flight_takeoff</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Traveler</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+<!-- Tile 5: Parent -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="parent"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">family_restroom</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Parent</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+<!-- Tile 6: Farmer -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="farmer"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">agriculture</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Farmer</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+<!-- Tile 7: Commuter -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="commuter"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">directions_car</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Commuter</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+<!-- Tile 8: Event Planner -->
+<label class="cursor-pointer group relative">
+<input class="tile-checkbox sr-only" name="profile" type="checkbox" value="event"/>
+<div class="h-32 rounded-xl border border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center p-4 transition-all duration-200 hover:shadow-sm">
+<span class="material-symbols-outlined text-4xl mb-3 text-outline tile-icon transition-colors">event</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tile-label transition-colors text-center uppercase tracking-wider">Event Planner</span>
+<div class="check-indicator absolute top-3 right-3 bg-primary rounded-full w-6 h-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm filled">check</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Sticky Footer -->
+<div class="absolute bottom-0 w-full p-container-margin bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest to-transparent pt-12 pb-8">
+<button class="w-full bg-primary text-on-primary font-headline-md text-body-lg py-4 rounded-full shadow-[0_4px_12px_rgba(26,35,126,0.2)] active:scale-95 transition-transform duration-150 flex items-center justify-center gap-2">
+                Continue
+                <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+</div>
+</main>
+<script>
+        // Simple script to handle button state based on selection if needed later
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.tile-checkbox');
+            const continueBtn = document.querySelector('button');
+            
+            // Optional: You could add logic here to disable 'Continue' if nothing is selected, 
+            // but often in onboarding it's optional. Keeping it enabled for seamless UX.
+        });
+    </script>
+</body></html>

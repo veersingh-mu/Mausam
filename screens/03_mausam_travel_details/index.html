@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Travel Planner - Mausam App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#f1f1f1",
+                    "secondary": "#00639a",
+                    "tertiary-fixed-dim": "#78dc77",
+                    "on-primary-fixed": "#000767",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "surface-tint": "#4c56af",
+                    "on-surface-variant": "#454652",
+                    "on-tertiary-fixed": "#002204",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#f9f9f9",
+                    "on-secondary-fixed": "#001d32",
+                    "on-secondary-container": "#00436a",
+                    "secondary-fixed": "#cee5ff",
+                    "on-background": "#1a1c1c",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#004a75",
+                    "background": "#f9f9f9",
+                    "secondary-fixed-dim": "#96ccff",
+                    "primary": "#000666",
+                    "tertiary": "#002104",
+                    "outline": "#767683",
+                    "surface-dim": "#dadada",
+                    "primary-container": "#1a237e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c6c5d4",
+                    "tertiary-container": "#00390a",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#94f990",
+                    "on-surface": "#1a1c1c",
+                    "primary-fixed": "#e0e0ff",
+                    "inverse-surface": "#2f3131",
+                    "surface": "#f9f9f9",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface-container-low": "#f3f3f3",
+                    "secondary-container": "#51b2fe",
+                    "on-primary-container": "#8690ee",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-primary-fixed-variant": "#343d96",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container": "#eeeeee",
+                    "on-tertiary-fixed-variant": "#005313",
+                    "on-tertiary-container": "#48ab4d",
+                    "inverse-primary": "#bdc2ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "widget-gap": "12px",
+                    "base": "8px",
+                    "container-margin": "20px",
+                    "internal-padding": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-temp": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "data-mono": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-temp": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface dark:bg-surface shadow-sm">
+<div class="flex items-center justify-between px-container-margin py-base w-full">
+<button class="flex items-center gap-2 active:scale-95 duration-150 p-2 rounded-full hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<h1 class="font-headline-md text-headline-md-mobile text-primary dark:text-primary-fixed-dim tracking-tight">New Delhi, IN</h1>
+</button>
+<button class="active:scale-95 duration-150 p-2 rounded-full hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-outline-variant">notifications_active</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-container-margin pt-4 pb-8 space-y-6 md:max-w-3xl md:mx-auto md:w-full">
+<!-- Page Title -->
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Travel Planner</h2>
+</div>
+<!-- Saved Destinations -->
+<section class="space-y-3">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">Saved Destinations</h3>
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+<!-- Card 1 -->
+<div class="flex-shrink-0 bg-surface-container-lowest rounded-xl p-4 w-40 shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-body-md text-body-md font-medium">Mumbai</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">rainy</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-primary">28°</span>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-xs mt-1">Scattered Showers</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex-shrink-0 bg-surface-container-lowest rounded-xl p-4 w-40 shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-body-md text-body-md font-medium">Bangalore</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">partly_cloudy_day</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-primary">24°</span>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-xs mt-1">Pleasant</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flex-shrink-0 bg-surface-container-lowest rounded-xl p-4 w-40 shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-body-md text-body-md font-medium">Goa</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">clear_day</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-primary">32°</span>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-xs mt-1">Sunny</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Flight Alerts -->
+<section>
+<div class="bg-error-container rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] flex gap-4 items-start">
+<div class="bg-error/10 p-2 rounded-full">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md font-semibold text-on-error-container">Flight Alerts</h4>
+<p class="font-body-md text-body-md text-on-error-container/90 mt-1">Potential delays at IGI Airport due to morning fog.</p>
+<button class="mt-3 font-label-caps text-label-caps text-error border border-error/50 px-4 py-1.5 rounded-full hover:bg-error/10 transition-colors">MONITOR STATUS</button>
+</div>
+</div>
+</section>
+<!-- Packing Tip -->
+<section>
+<div class="bg-secondary-container rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-9xl">luggage</span>
+</div>
+<div class="relative z-10 flex gap-3 items-start">
+<span class="material-symbols-outlined text-on-secondary-container mt-1">lightbulb</span>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-secondary-container">Packing Tip</h4>
+<p class="font-body-md text-body-md text-on-secondary-container mt-1">Heading to Mumbai? Light cottons and an umbrella are recommended for the evening showers.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Travel Outlook -->
+<section class="space-y-3">
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">Travel Outlook: Mumbai</h3>
+<div class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-outline-variant/30 space-y-4">
+<div class="flex items-center justify-between py-2 border-b border-outline-variant/20">
+<span class="font-body-md text-body-md w-16">Today</span>
+<span class="material-symbols-outlined text-secondary">rainy</span>
+<div class="flex gap-4 w-24 justify-end">
+<span class="font-data-mono text-data-mono text-on-surface">28°</span>
+<span class="font-data-mono text-data-mono text-outline">24°</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-outline-variant/20">
+<span class="font-body-md text-body-md w-16">Mon</span>
+<span class="material-symbols-outlined text-secondary">partly_cloudy_day</span>
+<div class="flex gap-4 w-24 justify-end">
+<span class="font-data-mono text-data-mono text-on-surface">29°</span>
+<span class="font-data-mono text-data-mono text-outline">25°</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-outline-variant/20">
+<span class="font-body-md text-body-md w-16">Tue</span>
+<span class="material-symbols-outlined text-secondary">thunderstorm</span>
+<div class="flex gap-4 w-24 justify-end">
+<span class="font-data-mono text-data-mono text-on-surface">27°</span>
+<span class="font-data-mono text-data-mono text-outline">23°</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-outline-variant/20">
+<span class="font-body-md text-body-md w-16">Wed</span>
+<span class="material-symbols-outlined text-secondary">cloud</span>
+<div class="flex gap-4 w-24 justify-end">
+<span class="font-data-mono text-data-mono text-on-surface">28°</span>
+<span class="font-data-mono text-data-mono text-outline">24°</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-body-md w-16">Thu</span>
+<span class="material-symbols-outlined text-secondary">rainy</span>
+<div class="flex gap-4 w-24 justify-end">
+<span class="font-data-mono text-data-mono text-on-surface">27°</span>
+<span class="font-data-mono text-data-mono text-outline">24°</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface-container dark:bg-surface-container-lowest shadow-[0_-4px_12px_rgba(26,35,126,0.08)] z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">radar</span>
+<span class="font-label-caps text-label-caps mt-1">Radar</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-label-caps mt-1">Alerts</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-primary-container text-on-secondary-container dark:text-primary-fixed rounded-full px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+<span class="font-label-caps text-label-caps mt-1">Saved</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</button>
+</nav>
+</body></html>

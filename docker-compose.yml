@@ -1,0 +1,140 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mausam-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mausam_user
+      POSTGRES_PASSWORD: mausam_secure_password
+      POSTGRES_DB: mausam_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mausam_user -d mausam_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: mausam-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: backend/api_gateway/Dockerfile
+    container_name: mausam-api-gateway
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://mausam_user:mausam_secure_password@postgres:5432/mausam_db
+      - REDIS_URL=redis://redis:6379/0
+      - AQI_SERVICE_URL=http://aqi-service:8001
+      - MARINE_SERVICE_URL=http://marine-service:8002
+      - AGRI_SERVICE_URL=http://agri-service:8003
+      - TRAFFIC_SERVICE_URL=http://traffic-service:8004
+      - ALERTS_SERVICE_URL=http://alerts-service:8005
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      aqi-service:
+        condition: service_started
+      marine-service:
+        condition: service_started
+      agri-service:
+        condition: service_started
+      traffic-service:
+        condition: service_started
+      alerts-service:
+        condition: service_started
+
+  aqi-service:
+    build:
+      context: .
+      dockerfile: backend/services/aqi_service/Dockerfile
+    container_name: mausam-aqi-service
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  marine-service:
+    build:
+      context: .
+      dockerfile: backend/services/marine_service/Dockerfile
+    container_name: mausam-marine-service
+    restart: unless-stopped
+    ports:
+      - "8002:8002"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  agri-service:
+    build:
+      context: .
+      dockerfile: backend/services/agri_service/Dockerfile
+    container_name: mausam-agri-service
+    restart: unless-stopped
+    ports:
+      - "8003:8003"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  traffic-service:
+    build:
+      context: .
+      dockerfile: backend/services/traffic_service/Dockerfile
+    container_name: mausam-traffic-service
+    restart: unless-stopped
+    ports:
+      - "8004:8004"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  alerts-service:
+    build:
+      context: .
+      dockerfile: backend/services/alerts_service/Dockerfile
+    container_name: mausam-alerts-service
+    restart: unless-stopped
+    ports:
+      - "8005:8005"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:

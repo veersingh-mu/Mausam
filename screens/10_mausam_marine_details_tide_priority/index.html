@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mausam App - Marine Weather</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#c6c5d4",
+                      "secondary-fixed-dim": "#96ccff",
+                      "on-primary-fixed-variant": "#343d96",
+                      "surface-container-low": "#f3f3f3",
+                      "tertiary-fixed": "#94f990",
+                      "on-background": "#1a1c1c",
+                      "on-error-container": "#93000a",
+                      "on-secondary-container": "#00436a",
+                      "secondary-fixed": "#cee5ff",
+                      "tertiary": "#002104",
+                      "surface-bright": "#f9f9f9",
+                      "surface-tint": "#4c56af",
+                      "on-surface-variant": "#454652",
+                      "on-tertiary-container": "#48ab4d",
+                      "on-primary": "#ffffff",
+                      "inverse-primary": "#bdc2ff",
+                      "surface-dim": "#dadada",
+                      "on-primary-fixed": "#000767",
+                      "on-tertiary-fixed-variant": "#005313",
+                      "surface-container-high": "#e8e8e8",
+                      "primary-container": "#1a237e",
+                      "on-secondary-fixed-variant": "#004a75",
+                      "on-surface": "#1a1c1c",
+                      "surface": "#f9f9f9",
+                      "secondary": "#00639a",
+                      "tertiary-container": "#00390a",
+                      "surface-variant": "#e2e2e2",
+                      "on-secondary": "#ffffff",
+                      "secondary-container": "#51b2fe",
+                      "surface-container-highest": "#e2e2e2",
+                      "error": "#ba1a1a",
+                      "on-error": "#ffffff",
+                      "outline": "#767683",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed": "#e0e0ff",
+                      "background": "#f9f9f9",
+                      "tertiary-fixed-dim": "#78dc77",
+                      "inverse-on-surface": "#f1f1f1",
+                      "primary": "#000666",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#002204",
+                      "inverse-surface": "#2f3131",
+                      "on-secondary-fixed": "#001d32",
+                      "surface-container": "#eeeeee",
+                      "error-container": "#ffdad6",
+                      "primary-fixed-dim": "#bdc2ff",
+                      "on-primary-container": "#8690ee"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-margin": "20px",
+                      "base": "8px",
+                      "internal-padding": "16px",
+                      "widget-gap": "12px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "display-temp": ["Inter"],
+                      "body-md": ["Inter"],
+                      "data-mono": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-caps": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                      "display-temp": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        body {
+            background-color: #F5F5F5;
+        }
+        
+        /* Simulated Chart Styles for pure HTML/CSS representation */
+        .chart-container {
+            position: relative;
+            height: 120px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 20px;
+        }
+        .chart-line {
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 80%, #00639a 2px, transparent 3px),
+                radial-gradient(circle at 30% 20%, #00639a 2px, transparent 3px),
+                radial-gradient(circle at 50% 75%, #00639a 2px, transparent 3px),
+                radial-gradient(circle at 70% 25%, #00639a 2px, transparent 3px),
+                radial-gradient(circle at 90% 60%, #00639a 2px, transparent 3px);
+            position: relative;
+        }
+        .chart-svg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+        
+        .chart-labels {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- Mobile Nav (Hidden on Desktop) -->
+<nav class="md:hidden bg-surface-container dark:bg-surface-container-lowest text-primary dark:text-primary-fixed-dim font-label-caps text-label-caps font-headline-md text-headline-md fixed bottom-0 w-full z-50 shadow-[0_-4px_12px_rgba(26,35,126,0.08)] fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe">
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-primary-container text-on-secondary-container dark:text-primary-fixed rounded-full px-4 py-1 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="radar">radar</span>
+<span class="mt-1">Radar</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="mt-1">Alerts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="mt-1">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="mt-1">Profile</span>
+</a>
+</nav>
+<!-- Side Navigation (Desktop Only) -->
+<aside class="hidden md:flex flex-col h-screen w-80 rounded-r-xl bg-surface dark:bg-surface-dim text-primary dark:text-primary-fixed-dim font-body-md text-body-md font-headline-lg text-headline-lg shadow-xl p-internal-padding sticky top-0">
+<div class="flex items-center mb-8 gap-3">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="A small, high-resolution circular avatar representing a professional meteorological institution logo, featuring clean lines, deep blue colors, and a modern corporate aesthetic suitable for an authoritative weather application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdKk_1SKRBIroPcPx24fxc1F2CFR_fpesxNOhqM9iWR0AFeneL0lR6zgy3vX1rOZe4Qtz_o8xgD7zXYW3_0A0pdVCljbq4hfIa7BzdVKoo-0JFKcJW-Y39wyVWsDuhIiAIrr34AJ1yF5y8BqyeSPudq7PyvHzWa_P73WmgvJv_VJP-Rvv1vVjryPnyWAkhwaO7srQhNIjRajuZlkDNNS9ypOW4GRaMDdR35AM_6Mh3hUuqtIyotVW2vA"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">India Meteorological Department</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Institutional Authority</p>
+<p class="font-label-caps text-label-caps text-outline text-xs mt-1">v2.4.0</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                Overview
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="radar">radar</span>
+                Marine Radar
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+                Personalization
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="notifications_paused">notifications_paused</span>
+                Alert Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+                Offline Maps
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg hover:bg-surface-container-high transition-all duration-200 ease-in-out mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Help &amp; Support
+            </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-h-screen pb-24 md:pb-0">
+<!-- Top App Bar -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary-fixed-dim font-headline-md text-headline-md-mobile md:text-headline-md w-full sticky top-0 z-40 shadow-sm flex items-center justify-between px-container-margin py-base">
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+</button>
+<h1 class="font-bold tracking-tight">Mumbai Coast, IN</h1>
+</div>
+<button class="p-2 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</button>
+</header>
+<!-- Canvas -->
+<div class="p-container-margin max-w-4xl mx-auto w-full flex-1">
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Marine Conditions</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Real-time beach and coastal meteorological data.</p>
+</div>
+<!-- Bento Grid Layout for Marine Weather -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-widget-gap">
+<!-- Main Tide Card (Spans full on mobile, 8 cols on desktop) -->
+<div class="bg-surface-container-lowest rounded-[24px] shadow-[0_4px_12px_rgba(26,35,126,0.08)] p-internal-padding md:col-span-8 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="water">water</span>
+                                Tide Timing
+                            </h3>
+<p class="font-label-caps text-label-caps text-outline mt-1">NEXT HIGH TIDE: 14:30 IST</p>
+</div>
+<div class="bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-caps text-label-caps px-3 py-1 rounded-full flex items-center gap-1 border border-on-tertiary-container/20">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span>
+                            Safe Conditions
+                        </div>
+</div>
+<!-- Tide Chart Area -->
+<div class="flex-1 min-h-[160px] bg-surface rounded-xl p-4 border border-surface-variant relative overflow-hidden flex flex-col justify-end">
+<!-- Decorative background for chart -->
+<div class="absolute inset-0 opacity-10 bg-cover bg-center" data-alt="A subtle, highly abstract, light-mode background texture featuring soft, undulating geometric waves in very pale blues and off-whites. The aesthetic is clean, clinical, and data-focused, creating a sense of calm oceanic rhythm without distracting from data visualization." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGfXZgnzF0aKmqWt_SnX8VRFBjpe1xe9P8loNBDlVDMTa6mupkSm2W42OqY_uZ9y0_rerVj2B6WJpxs99YOOUQYVsp2JkQY6gfKpSCKKErmlV5t92Lt8AqgmahvBefAWRzANF3aDDMPL2PLDAKSrM7L2FnQE5MLfhFM4tGs6oJsGAvdiQAN_Rc9B7cSq_HptS4fLkFzV_muERWocpgwrYrHEgxeDgB4lE-AdTmqlNrayV_hbRSICe-yw')"></div>
+<div class="chart-container">
+<svg class="chart-svg" preserveaspectratio="none" viewbox="0 0 100 40">
+<path d="M0,20 Q15,40 30,20 T60,20 T90,20 T100,20 L100,40 L0,40 Z" fill="#cee5ff" opacity="0.3"></path>
+<path d="M0,20 Q15,40 30,20 T60,20 T90,20 T100,20" fill="none" stroke="#00639a" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Markers -->
+<circle cx="30" cy="20" fill="#1a237e" r="1.5"></circle>
+<circle cx="60" cy="20" fill="#1a237e" r="1.5"></circle>
+</svg>
+</div>
+<div class="chart-labels font-data-mono text-data-mono text-outline text-[10px]">
+<span class="">06:00</span>
+<span class="">12:00</span>
+<span class="">18:00</span>
+<span class="">00:00</span>
+</div>
+</div>
+</div><div class="bg-surface-container-lowest rounded-[16px] shadow-[0_4px_12px_rgba(26,35,126,0.08)] p-internal-padding flex-1 flex flex-col justify-center border border-transparent hover:border-secondary-fixed transition-colors md:col-span-12 mb-widget-gap">
+<div class="flex items-center gap-2 mb-2 text-secondary">
+<span class="material-symbols-outlined" data-icon="waves">waves</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">WAVE HEIGHT</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-display-temp text-display-temp text-primary">1.2</span>
+<span class="font-body-lg text-body-lg text-on-surface-variant">m</span>
+</div>
+<p class="font-data-mono text-data-mono text-outline mt-1 text-sm">Swell direction: SSW</p>
+</div>
+<!-- Secondary Metrics Column (Spans full on mobile, 4 cols on desktop) -->
+<div class="md:col-span-4 flex flex-col gap-widget-gap">
+<!-- Wave Height Widget -->
+<!-- Sea Temp Widget -->
+<div class="bg-surface-container-lowest rounded-[16px] shadow-[0_4px_12px_rgba(26,35,126,0.08)] p-internal-padding flex-1 flex flex-col justify-center border border-transparent hover:border-secondary-fixed transition-colors">
+<div class="flex items-center gap-2 mb-2 text-secondary">
+<span class="material-symbols-outlined" data-icon="thermostat">thermostat</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">SEA TEMP</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-display-temp text-display-temp text-primary">26</span>
+<span class="font-body-lg text-body-lg text-on-surface-variant">°C</span>
+</div>
+<p class="font-data-mono text-data-mono text-outline mt-1 text-sm">Consistent with seasonal avg.</p>
+</div>
+</div>
+</div>
+<!-- Additional Context Widget -->
+<div class="mt-widget-gap bg-surface-container-lowest rounded-[16px] shadow-[0_4px_12px_rgba(26,35,126,0.08)] p-internal-padding flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="phishing">phishing</span>
+</div>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Fishing Advisory</h4>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-sm">Clear for deep sea ventures today.</p>
+</div>
+</div>
+<button class="px-4 py-2 bg-surface text-secondary border border-outline-variant rounded-lg font-data-mono text-data-mono hover:bg-surface-container-high transition-colors">
+                     View Details
+                 </button>
+</div>
+</div>
+</main>
+</body></html>

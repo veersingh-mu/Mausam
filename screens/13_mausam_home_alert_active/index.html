@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mausam - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#f9f9f9",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "on-tertiary-fixed": "#002204",
+                        "on-primary-fixed-variant": "#343d96",
+                        "on-surface-variant": "#454652",
+                        "on-error-container": "#93000a",
+                        "secondary": "#00639a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#bdc2ff",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-container": "#51b2fe",
+                        "surface-container-low": "#f3f3f3",
+                        "surface": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "outline": "#767683",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-fixed-variant": "#004a75",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed": "#000767",
+                        "secondary-fixed": "#cee5ff",
+                        "surface-container-highest": "#e2e2e2",
+                        "tertiary-container": "#00390a",
+                        "primary": "#000666",
+                        "surface-tint": "#4c56af",
+                        "on-background": "#1a1c1c",
+                        "surface-dim": "#dadada",
+                        "primary-fixed": "#e0e0ff",
+                        "outline-variant": "#c6c5d4",
+                        "tertiary-fixed": "#94f990",
+                        "primary-container": "#1a237e",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#bdc2ff",
+                        "on-primary-container": "#8690ee",
+                        "on-secondary-fixed": "#001d32",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-secondary-container": "#00436a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#002104",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "secondary-fixed-dim": "#96ccff",
+                        "surface-container": "#eeeeee",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-container": "#48ab4d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "widget-gap": "12px",
+                        "base": "8px",
+                        "internal-padding": "16px",
+                        "container-margin": "20px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "display-temp": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                        "data-mono": ["14px", { lineHeight: "20px", letterSpacing: "-0.01em", fontWeight: "500" }],
+                        "display-temp": ["64px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-lg-mobile": ["28px", { lineHeight: "34px", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface shadow-sm flex items-center justify-between px-container-margin py-base w-full">
+<div class="flex items-center gap-2 text-primary font-headline-md text-headline-md-mobile">
+<span class="material-symbols-outlined">location_on</span>
+<span>New Delhi, IN</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">notifications_active</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 px-container-margin py-base flex flex-col gap-widget-gap pb-28">
+<!-- Alert Banner -->
+<div class="bg-error-container text-on-error-container rounded-xl p-internal-padding shadow-sm flex items-start gap-3 cursor-pointer active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div>
+<h3 class="font-headline-md text-[18px] font-bold leading-tight mb-1">Severe Rain Alert</h3>
+<p class="font-body-md text-[14px]">Heavy downpour expected for next 3 hours. Avoid low-lying areas.</p>
+</div>
+</div>
+<!-- Hero Weather Card -->
+<div class="bg-primary text-on-primary rounded-[24px] p-container-margin shadow-md flex flex-col gap-4 relative overflow-hidden">
+<div class="absolute -right-10 -top-10 opacity-20">
+<span class="material-symbols-outlined text-[150px]" style="font-variation-settings: 'FILL' 1;">rainy</span>
+</div>
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile">Mumbai</h2>
+<p class="font-body-md opacity-90">Current Conditions</p>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="font-display-temp text-display-temp">28°</div>
+<div class="flex flex-col items-end">
+<span class="material-symbols-outlined text-[48px]" style="font-variation-settings: 'FILL' 1;">thunderstorm</span>
+<span class="font-headline-md text-[20px] font-medium">Heavy Rain</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Widgets -->
+<div class="grid grid-cols-2 gap-widget-gap">
+<div class="bg-surface rounded-xl p-internal-padding shadow-sm flex flex-col gap-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">air</span>
+<span class="font-label-caps text-label-caps">WIND</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface text-[18px]">24 km/h SW</div>
+</div>
+<div class="bg-surface rounded-xl p-internal-padding shadow-sm flex flex-col gap-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+<span class="font-label-caps text-label-caps">VISIBILITY</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface text-[18px]">2.5 km</div>
+</div>
+<div class="col-span-2 bg-surface rounded-xl p-internal-padding shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<span class="font-label-caps text-label-caps">HOURLY FORECAST</span>
+</div>
+<div class="flex justify-between items-center text-center">
+<div class="flex flex-col gap-1 items-center">
+<span class="font-body-md text-[12px] text-on-surface-variant">Now</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">rainy</span>
+<span class="font-data-mono text-[14px]">28°</span>
+</div>
+<div class="flex flex-col gap-1 items-center">
+<span class="font-body-md text-[12px] text-on-surface-variant">2 PM</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">thunderstorm</span>
+<span class="font-data-mono text-[14px]">27°</span>
+</div>
+<div class="flex flex-col gap-1 items-center">
+<span class="font-body-md text-[12px] text-on-surface-variant">3 PM</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">rainy</span>
+<span class="font-data-mono text-[14px]">27°</span>
+</div>
+<div class="flex flex-col gap-1 items-center">
+<span class="font-body-md text-[12px] text-on-surface-variant">4 PM</span>
+<span class="material-symbols-outlined text-on-surface-variant">cloud</span>
+<span class="font-data-mono text-[14px]">26°</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface-container shadow-[0_-4px_12px_rgba(26,35,126,0.08)] md:hidden z-50">
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">radar</span>
+<span class="font-label-caps text-label-caps mt-1">Radar</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-label-caps mt-1">Alerts</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-caps text-label-caps mt-1">Saved</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Weather Safety</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-container": "#8690ee",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#96ccff",
+                        "surface-tint": "#4c56af",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "on-primary-fixed-variant": "#343d96",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#e0e0ff",
+                        "tertiary-fixed": "#94f990",
+                        "secondary-container": "#51b2fe",
+                        "primary-fixed-dim": "#bdc2ff",
+                        "surface-container": "#eeeeee",
+                        "primary": "#000666",
+                        "surface-dim": "#dadada",
+                        "on-secondary-container": "#00436a",
+                        "on-secondary-fixed-variant": "#004a75",
+                        "tertiary": "#002104",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002204",
+                        "inverse-on-surface": "#f1f1f1",
+                        "secondary-fixed": "#cee5ff",
+                        "tertiary-container": "#00390a",
+                        "primary-container": "#1a237e",
+                        "on-primary-fixed": "#000767",
+                        "surface-container-high": "#e8e8e8",
+                        "on-background": "#1a1c1c",
+                        "on-secondary-fixed": "#001d32",
+                        "background": "#f9f9f9",
+                        "inverse-primary": "#bdc2ff",
+                        "outline": "#767683",
+                        "on-surface-variant": "#454652",
+                        "surface": "#f9f9f9",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary": "#00639a",
+                        "on-surface": "#1a1c1c",
+                        "outline-variant": "#c6c5d4",
+                        "on-tertiary-container": "#48ab4d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-margin": "20px",
+                        "base": "8px",
+                        "internal-padding": "16px",
+                        "widget-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-temp": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-temp": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased pb-[100px]">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface sticky top-0 z-50 shadow-sm flex items-center justify-between px-container-margin py-base w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="location_on">location_on</span>
+<h1 class="font-headline-md text-headline-md-mobile text-primary dark:text-primary-fixed-dim">New Delhi, IN</h1>
+</div>
+<button class="hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="notifications_active">notifications_active</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="px-container-margin py-6 space-y-6 max-w-[480px] mx-auto md:max-w-3xl">
+<!-- Header Section -->
+<section class="space-y-1">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Family Weather Safety</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Protecting your loved ones today.</p>
+</section>
+<!-- Parent's Tip Callout -->
+<section class="bg-primary-container text-on-primary-container rounded-xl p-internal-padding shadow-sm flex items-start gap-4">
+<span class="material-symbols-outlined text-3xl shrink-0 mt-1" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<div>
+<h3 class="font-headline-md text-body-lg font-semibold mb-1 text-primary-fixed">Parent's Tip</h3>
+<p class="font-body-md text-body-md text-primary-fixed-dim">Pack an extra umbrella for the afternoon. Brief showers are expected during school pick-up times.</p>
+</div>
+</section>
+<!-- Bento Grid Layout for Key Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-widget-gap">
+<!-- Kids' Play Index -->
+<section class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-surface-variant flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-md text-body-lg text-primary">Kids' Play Index</h3>
+<span class="material-symbols-outlined text-tertiary-container text-2xl bg-tertiary-fixed p-1.5 rounded-full" data-icon="park" style="font-variation-settings: 'FILL' 1;">park</span>
+</div>
+<div class="flex items-end gap-3 mb-2">
+<span class="font-display-temp text-display-temp text-primary">28°</span>
+<span class="font-body-md text-body-md text-on-surface-variant pb-2">AQI: 45 (Good)</span>
+</div>
+<div class="inline-flex items-center gap-2 bg-tertiary-fixed text-on-tertiary-fixed-variant px-3 py-1.5 rounded-lg w-fit">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-caps text-label-caps">Safe for Outdoors</span>
+</div>
+</section>
+<!-- Clothing Guide -->
+<section class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-surface-variant flex flex-col justify-between h-full">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-md text-body-lg text-primary">Clothing Guide</h3>
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="checkroom">checkroom</span>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-auto">
+<div class="flex flex-col items-center justify-center p-2 bg-surface-container-low rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant mb-1" data-icon="laundry">laundry</span>
+<span class="font-data-mono text-[11px] text-center text-on-surface">Light Cottons</span>
+</div>
+<div class="flex flex-col items-center justify-center p-2 bg-secondary-fixed rounded-lg">
+<span class="material-symbols-outlined text-secondary mb-1" data-icon="umbrella">umbrella</span>
+<span class="font-data-mono text-[11px] text-center text-secondary">Raincoat</span>
+</div>
+<div class="flex flex-col items-center justify-center p-2 bg-surface-container-low rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant mb-1" data-icon="sports_baseball">sports_baseball</span>
+<span class="font-data-mono text-[11px] text-center text-on-surface">Sun Hat</span>
+</div>
+</div>
+</section>
+</div>
+<!-- School Commute Strip -->
+<section class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-surface-variant">
+<h3 class="font-headline-md text-body-lg text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="directions_bus">directions_bus</span>
+                Commute Safety
+            </h3>
+<div class="space-y-4 relative before:absolute before:inset-y-0 before:left-[19px] before:w-px before:bg-outline-variant">
+<!-- Drop-off -->
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest border-2 border-tertiary-container flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-tertiary-container text-sm" data-icon="wb_sunny" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-0.5">7:30 AM - Drop-off</p>
+<p class="font-data-mono text-data-mono text-on-surface">Clear, 22°C</p>
+</div>
+<div class="text-right">
+<span class="font-body-md text-sm text-tertiary-container font-semibold">Good</span>
+</div>
+</div>
+</div>
+<!-- Pick-up -->
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest border-2 border-error flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-error text-sm" data-icon="rainy" style="font-variation-settings: 'FILL' 1;">rainy</span>
+</div>
+<div class="flex-1 bg-error-container p-3 rounded-lg flex items-center justify-between">
+<div>
+<p class="font-label-caps text-label-caps text-on-error-container mb-0.5">2:00 PM - Pick-up</p>
+<p class="font-data-mono text-data-mono text-on-error-container">Light Rain, 26°C</p>
+</div>
+<div class="text-right">
+<span class="font-body-md text-sm text-error font-semibold">Caution</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Rain Alert Timeline -->
+<section class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] border border-surface-variant overflow-hidden">
+<h3 class="font-headline-md text-body-lg text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+                12-Hour Rain Planner
+            </h3>
+<div class="flex overflow-x-auto pb-2 -mx-2 px-2 snap-x hide-scrollbar">
+<!-- Timeline items -->
+<div class="flex flex-col items-center min-w-[60px] snap-center">
+<span class="font-data-mono text-[12px] text-on-surface-variant mb-2">Now</span>
+<div class="h-16 w-3 bg-surface-container-high rounded-full relative overflow-hidden mb-2">
+<div class="absolute bottom-0 w-full bg-secondary rounded-full" style="height: 10%;"></div>
+</div>
+<span class="font-data-mono text-[10px] text-secondary">10%</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px] snap-center">
+<span class="font-data-mono text-[12px] text-on-surface-variant mb-2">10 AM</span>
+<div class="h-16 w-3 bg-surface-container-high rounded-full relative overflow-hidden mb-2">
+<div class="absolute bottom-0 w-full bg-secondary rounded-full" style="height: 15%;"></div>
+</div>
+<span class="font-data-mono text-[10px] text-secondary">15%</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px] snap-center">
+<span class="font-data-mono text-[12px] text-on-surface-variant mb-2">12 PM</span>
+<div class="h-16 w-3 bg-surface-container-high rounded-full relative overflow-hidden mb-2">
+<div class="absolute bottom-0 w-full bg-secondary rounded-full" style="height: 30%;"></div>
+</div>
+<span class="font-data-mono text-[10px] text-secondary">30%</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px] snap-center">
+<span class="font-data-mono text-[12px] text-on-surface-variant mb-2">2 PM</span>
+<div class="h-16 w-3 bg-surface-container-high rounded-full relative overflow-hidden mb-2">
+<div class="absolute bottom-0 w-full bg-secondary rounded-full" style="height: 80%;"></div>
+</div>
+<span class="font-data-mono text-[10px] text-secondary font-bold">80%</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px] snap-center">
+<span class="font-data-mono text-[12px] text-on-surface-variant mb-2">4 PM</span>
+<div class="h-16 w-3 bg-surface-container-high rounded-full relative overflow-hidden mb-2">
+<div class="absolute bottom-0 w-full bg-secondary rounded-full" style="height: 60%;"></div>
+</div>
+<span class="font-data-mono text-[10px] text-secondary">60%</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px] snap-center">
+<span class="font-data-mono text-[12px] text-on-surface-variant mb-2">6 PM</span>
+<div class="h-16 w-3 bg-surface-container-high rounded-full relative overflow-hidden mb-2">
+<div class="absolute bottom-0 w-full bg-secondary rounded-full" style="height: 20%;"></div>
+</div>
+<span class="font-data-mono text-[10px] text-secondary">20%</span>
+</div>
+</div>
+<style>
+                .hide-scrollbar::-webkit-scrollbar { display: none; }
+                .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            </style>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface-container dark:bg-surface-container-lowest shadow-[0_-4px_12px_rgba(26,35,126,0.08)] z-50 md:hidden">
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-primary-container text-on-secondary-container dark:text-primary-fixed rounded-full px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="radar">radar</span>
+<span class="font-label-caps text-label-caps mt-1">Radar</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-label-caps text-label-caps mt-1">Alerts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-label-caps text-label-caps mt-1">Saved</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Event Planner - Mausam</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#767683",
+                        "background": "#f9f9f9",
+                        "on-primary-fixed-variant": "#343d96",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "outline-variant": "#c6c5d4",
+                        "secondary-fixed-dim": "#96ccff",
+                        "secondary": "#00639a",
+                        "surface-tint": "#4c56af",
+                        "on-tertiary-fixed": "#002204",
+                        "on-primary-container": "#8690ee",
+                        "surface-dim": "#dadada",
+                        "on-primary-fixed": "#000767",
+                        "on-primary": "#ffffff",
+                        "surface": "#f9f9f9",
+                        "primary-fixed-dim": "#bdc2ff",
+                        "surface-container-low": "#f3f3f3",
+                        "on-background": "#1a1c1c",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "tertiary-fixed": "#94f990",
+                        "on-secondary-fixed-variant": "#004a75",
+                        "surface-container-high": "#e8e8e8",
+                        "on-surface-variant": "#454652",
+                        "secondary-fixed": "#cee5ff",
+                        "secondary-container": "#51b2fe",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#00390a",
+                        "on-secondary-fixed": "#001d32",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary": "#000666",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#48ab4d",
+                        "tertiary": "#002104",
+                        "primary-fixed": "#e0e0ff",
+                        "surface-variant": "#e2e2e2",
+                        "on-surface": "#1a1c1c",
+                        "primary-container": "#1a237e",
+                        "surface-container": "#eeeeee",
+                        "surface-container-highest": "#e2e2e2",
+                        "inverse-on-surface": "#f1f1f1",
+                        "inverse-primary": "#bdc2ff",
+                        "on-secondary-container": "#00436a",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "widget-gap": "12px",
+                        "container-margin": "20px",
+                        "internal-padding": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "display-temp": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "display-temp": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased pb-[80px]">
+<!-- TopAppBar -->
+<div class="bg-surface dark:bg-surface w-full sticky top-0 z-50 shadow-sm flex items-center justify-between px-container-margin py-base w-full">
+<button class="text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile text-primary dark:text-primary-fixed-dim text-headline-md font-headline-md text-primary dark:text-primary-fixed-dim">New Delhi, IN</h1>
+<button class="text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</button>
+</div>
+<!-- Main Content -->
+<main class="px-container-margin pt-internal-padding space-y-6">
+<!-- Screen Title -->
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">Event Planner</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Plan with precision, powered by IMD.</p>
+</div>
+<!-- Event Feasibility Tool -->
+<section class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)]">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-md text-headline-md text-on-background">Check a Date</h3>
+<span class="material-symbols-outlined text-primary" data-icon="event_search">save_as</span>
+</div>
+<div class="flex gap-2">
+<input class="flex-1 bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-body-md" type="date" value="2024-12-12"/>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-body-md font-medium hover:opacity-90 transition-opacity">Analyze</button>
+</div>
+</section>
+<!-- My Events -->
+<section>
+<h3 class="font-headline-md text-headline-md text-on-background mb-3">My Events</h3>
+<div class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] border-l-4 border-tertiary-container relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2">
+<span class="material-symbols-outlined text-outline-variant" data-icon="more_vert">more_vert</span>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-surface-container-low p-3 rounded-lg flex flex-col items-center justify-center w-16">
+<span class="font-label-caps text-label-caps text-on-surface-variant">DEC</span>
+<span class="font-headline-md text-headline-md text-primary">12</span>
+</div>
+<div>
+<h4 class="font-body-lg text-body-lg font-semibold text-on-background">Outdoor Wedding</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span> Lodhi Gardens
+                        </p>
+<div class="mt-3 inline-flex items-center gap-1.5 bg-tertiary-fixed text-on-tertiary-fixed px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+<span class="font-label-caps text-label-caps">High Confidence: Clear Skies</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Planning Insights for Dec 12 -->
+<section>
+<h3 class="font-headline-md text-headline-md text-on-background mb-3">Insights: Dec 12</h3>
+<div class="grid grid-cols-2 gap-widget-gap">
+<!-- Rain Probability -->
+<div class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-secondary mb-2" data-icon="water_drop">water_drop</span>
+<span class="font-headline-md text-headline-md text-on-background">5%</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-1">Rain Risk</span>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 5%"></div>
+</div>
+</div>
+<!-- Comfort Index -->
+<div class="bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-tertiary-container mb-2" data-icon="sentiment_satisfied">sentiment_satisfied</span>
+<span class="font-headline-md text-headline-md text-on-background">Ideal</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-1">Comfort Index</span>
+<p class="font-data-mono text-data-mono text-on-surface-variant mt-2 text-xs">22°C | 45% RH</p>
+</div>
+<!-- Lighting Outlook -->
+<div class="col-span-2 bg-surface-container-lowest rounded-xl p-internal-padding shadow-[0_4px_12px_rgba(26,35,126,0.08)] flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-warning-orange" data-icon="wb_twilight">wb_twilight</span>
+<h4 class="font-body-lg text-body-lg font-medium text-on-background">Lighting Outlook</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Golden Hour: 16:45 - 17:30</p>
+</div>
+<div class="text-right">
+<p class="font-data-mono text-data-mono text-on-surface-variant"><span class="material-symbols-outlined text-[14px] align-middle" data-icon="wb_sunny">wb_sunny</span> 06:42</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant mt-1"><span class="material-symbols-outlined text-[14px] align-middle" data-icon="nights_stay">nights_stay</span> 17:34</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Expert Advice -->
+<section class="bg-secondary-container text-on-secondary-container rounded-xl p-internal-padding relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[100px]" data-icon="tips_and_updates">tips_and_updates</span>
+</div>
+<div class="flex gap-3 relative z-10">
+<span class="material-symbols-outlined mt-1" data-icon="campaign">campaign</span>
+<div>
+<h4 class="font-body-lg text-body-lg font-semibold mb-1">IMD Expert Advice</h4>
+<p class="font-body-md text-body-md opacity-90">Late-evening events in mid-December have a high probability of dense radiation fog starting around 21:00. Plan outdoor activities accordingly.</p>
+</div>
+</div>
+</section>
+<!-- 3-Day Planning Outlook -->
+<section class="pb-6">
+<h3 class="font-headline-md text-headline-md text-on-background mb-3">Upcoming Weekend Outlook</h3>
+<div class="flex overflow-x-auto gap-widget-gap no-scrollbar pb-2">
+<!-- Day 1 -->
+<div class="min-w-[120px] bg-surface-container-lowest rounded-xl p-3 shadow-[0_4px_12px_rgba(26,35,126,0.08)] text-center flex flex-col items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">FRI, DEC 14</span>
+<span class="material-symbols-outlined text-primary my-2 text-[32px]" data-icon="clear_day">clear_day</span>
+<span class="font-body-lg text-body-lg font-semibold text-on-background">24°</span>
+<span class="font-body-md text-body-md text-on-surface-variant">12°</span>
+</div>
+<!-- Day 2 -->
+<div class="min-w-[120px] bg-surface-container-lowest rounded-xl p-3 shadow-[0_4px_12px_rgba(26,35,126,0.08)] text-center flex flex-col items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SAT, DEC 15</span>
+<span class="material-symbols-outlined text-primary my-2 text-[32px]" data-icon="partly_cloudy_day">partly_cloudy_day</span>
+<span class="font-body-lg text-body-lg font-semibold text-on-background">23°</span>
+<span class="font-body-md text-body-md text-on-surface-variant">11°</span>
+</div>
+<!-- Day 3 -->
+<div class="min-w-[120px] bg-surface-container-lowest rounded-xl p-3 shadow-[0_4px_12px_rgba(26,35,126,0.08)] text-center flex flex-col items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SUN, DEC 16</span>
+<span class="material-symbols-outlined text-primary my-2 text-[32px]" data-icon="cloud">cloud</span>
+<span class="font-body-lg text-body-lg font-semibold text-on-background">21°</span>
+<span class="font-body-md text-body-md text-on-surface-variant">10°</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<div class="bg-surface-container dark:bg-surface-container-lowest font-label-caps text-label-caps font-headline-md text-headline-md text-primary fixed bottom-0 w-full z-50 bg-surface-container dark:bg-surface-container-lowest shadow-[0_-4px_12px_rgba(26,35,126,0.08)] fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe md:hidden">
+<div class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-primary-container text-on-secondary-container dark:text-primary-fixed rounded-full px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="radar">radar</span>
+<span class="mt-1">Radar</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="mt-1">Alerts</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="mt-1">Saved</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:opacity-80 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="mt-1">Profile</span>
+</div>
+</div>
+</body></html>

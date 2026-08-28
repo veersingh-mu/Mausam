@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mausam - India Meteorological Department (IMD)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .imd-gradient { background: linear-gradient(135deg, #000666 0%, #1A237E 60%, #00639A 100%); }
+    .card-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-lift:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -10px rgba(26, 35, 126, 0.15); }
+    .tile-scale { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+  <!-- Government Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-[#1A237E] flex items-center justify-center text-white font-black text-xl shadow-md shadow-indigo-900/20">
+          M
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-xl font-bold text-[#1A237E] tracking-tight">MAUSAM</h1>
+            <span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">IMD Live</span>
+          </div>
+          <p class="text-xs text-slate-500 font-medium">India Meteorological Department • Ministry of Earth Sciences</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button onclick="openSearchModal()" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-[#1A237E] font-bold text-xs transition border border-indigo-200 shadow-xs">
+          <span class="material-symbols-outlined text-sm">search</span>
+          <span>Search City</span>
+        </button>
+        <button onclick="openOnboardingModal()" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition shadow-sm">
+          <span class="material-symbols-outlined text-sm">auto_awesome</span>
+          <span>Onboarding Wizard</span>
+        </button>
+        <a href="/docs" target="_blank" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-[#1A237E] font-semibold text-xs transition">
+          <span class="material-symbols-outlined text-sm">api</span>
+          <span>Swagger Docs</span>
+        </a>
+        <a href="/health" target="_blank" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 font-semibold text-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Live Online</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="imd-gradient text-white py-10 px-4 shadow-inner">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <div class="lg:col-span-2 space-y-4">
+          <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold">
+            <span class="material-symbols-outlined text-xs text-amber-300">bolt</span>
+            <span>Real-time Microservices Architecture with Redis Caching</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Personalized Weather Feed & Microservices Engine</h2>
+          <p class="text-indigo-100 text-sm sm:text-base max-w-2xl leading-relaxed">
+            Real-time lifestyle meteorological insights tailored for 8 specialized personas (Health, Fitness, Marine, Travel, Family, Agriculture, Commute, Events).
+          </p>
+
+          <!-- Search Bar Entry Point Pill -->
+          <div onclick="openSearchModal()" class="cursor-pointer max-w-lg p-3 bg-white/15 hover:bg-white/25 backdrop-blur-md rounded-2xl border border-white/30 flex items-center justify-between shadow-lg transition">
+            <div class="flex items-center space-x-3">
+              <span class="material-symbols-outlined text-white text-xl">search</span>
+              <span class="text-xs sm:text-sm font-medium text-white/90">Search city in India...</span>
+            </div>
+            <span class="text-[10px] font-extrabold bg-white/20 text-white px-2 py-0.5 rounded-md uppercase tracking-wider">35+ Cities</span>
+          </div>
+
+          <div class="pt-1 flex flex-wrap gap-2 items-center">
+            <span class="text-xs text-indigo-200 font-semibold mr-1">Quick:</span>
+            <button onclick="fetchFeed('New Delhi', 28.6139, 77.2090)" class="px-3 py-1.5 rounded-lg bg-white text-[#1A237E] font-bold text-xs shadow-md hover:bg-indigo-50 transition">📍 New Delhi</button>
+            <button onclick="fetchFeed('Mumbai Coast', 18.9220, 72.8347)" class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm transition">🌊 Mumbai</button>
+            <button onclick="fetchFeed('Bengaluru', 12.9716, 77.5946)" class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm transition">🌳 Bengaluru</button>
+            <button onclick="fetchFeed('Ludhiana Agri', 30.9010, 75.8573)" class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm transition">🌾 Punjab</button>
+            <button onclick="simulateAlert()" class="px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs shadow transition flex items-center space-x-1">
+              <span class="material-symbols-outlined text-xs">warning</span>
+              <span>Test Alert</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Current Flagship Card (Fully Responsive & Mobile Optimized) -->
+        <div onclick="openSearchModal()" onkeydown="if(event.key==='Enter'||event.key===' ')openSearchModal()" role="button" tabindex="0" aria-label="Weather overview for selected city. Tap to search or change city." class="cursor-pointer bg-white/10 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/50 transition backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-white shadow-xl flex flex-col justify-between group">
+          <!-- Card Header: Location & Accessible Change City Button (Zero Overlap, Min 44px Touch Target) -->
+          <div class="flex items-center justify-between pb-3 border-b border-white/10 gap-2">
+            <div class="flex items-center space-x-1.5 min-w-0 flex-1 pr-1">
+              <span class="material-symbols-outlined text-sm text-indigo-200 flex-shrink-0" aria-hidden="true">location_on</span>
+              <p class="text-xs sm:text-sm font-bold text-indigo-200 uppercase tracking-wider truncate" id="loc-name">New Delhi, India</p>
+            </div>
+            <button type="button" onclick="event.stopPropagation(); openSearchModal();" aria-label="Change City" class="min-h-[44px] min-w-[44px] bg-white/20 group-hover:bg-white/30 active:scale-95 px-3 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center justify-center space-x-1.5 transition shadow-2xs flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-white/60">
+              <span class="material-symbols-outlined text-sm" aria-hidden="true">search</span>
+              <span>Change City</span>
+            </button>
+          </div>
+
+          <!-- Card Middle: Responsive Temperature + Fluid Condition + Centered Scaled Icon -->
+          <div class="flex items-center justify-between py-3 sm:py-4 gap-2">
+            <div class="min-w-0 flex-1">
+              <h3 class="text-[clamp(2.25rem,7vw,3.25rem)] font-extrabold tracking-tight leading-none" id="temp-display">30°C</h3>
+              <p class="text-xs sm:text-sm text-indigo-100 mt-1.5 font-medium leading-snug break-words max-w-[200px] sm:max-w-none" id="cond-text">Partially cloudy • Feels like 38°C</p>
+            </div>
+            <!-- Dedicated Fixed Weather Icon Container (48px-64px scalable, perfectly centered, never clipped) -->
+            <div id="weather-hero-icon" class="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 flex-shrink-0 flex items-center justify-center filter drop-shadow-md" aria-hidden="true">
+              <!-- Rendered dynamically with SVG via getWeatherIconSvg -->
+            </div>
+          </div>
+
+          <!-- Card Bottom: Environmental Stats Row (Evenly Distributed 3-Col, No Overlap on 320px) -->
+          <div class="grid grid-cols-3 divide-x divide-white/10 pt-3 border-t border-white/10 text-center">
+            <div class="px-1 min-w-0">
+              <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">Humidity</p>
+              <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="humidity-text">82%</p>
+            </div>
+            <div class="px-1 min-w-0">
+              <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">Wind</p>
+              <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="wind-text">12.5 km/h</p>
+            </div>
+            <div class="px-1 min-w-0">
+              <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">UV Index</p>
+              <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="uv-text">6.8</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Alert Toast Area -->
+  <div id="alert-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 hidden">
+    <div class="bg-rose-50 border-2 border-rose-500/50 rounded-2xl p-4 flex items-start space-x-3 shadow-lg">
+      <span class="material-symbols-outlined text-rose-600 text-2xl animate-bounce">warning</span>
+      <div class="flex-1">
+        <div class="flex items-center space-x-2">
+          <span class="bg-rose-600 text-white text-[10px] font-black px-2 py-0.5 rounded">LIVE ALERT</span>
+          <h4 class="font-bold text-rose-900 text-sm" id="alert-title">Severe Weather Warning</h4>
+        </div>
+        <p class="text-xs text-rose-700 mt-1" id="alert-desc"></p>
+      </div>
+      <button onclick="document.getElementById('alert-container').classList.add('hidden')" class="text-rose-400 hover:text-rose-600 text-sm font-bold">&times;</button>
+    </div>
+  </div>
+
+  <!-- In-App Persona Toggle Ribbon -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="material-symbols-outlined text-indigo-700 text-lg">tune</span>
+            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide">In-App Persona Toggle System</h3>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">Toggle personas on/off anytime — homepage cards re-render instantly without full reload</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span id="active-persona-badge" class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full font-bold text-xs">4 Active</span>
+          <button onclick="openOnboardingModal()" class="text-xs text-indigo-600 hover:underline font-semibold">Run Onboarding</button>
+        </div>
+      </div>
+
+      <!-- 8 Live Toggles -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5" id="persona-toggle-bar">
+        <!-- Generated Dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Dynamic Feed Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+    <div class="mb-4 flex items-center justify-between">
+      <div>
+        <h3 class="text-base font-bold text-slate-800">Your Active Weather Modules</h3>
+        <p class="text-xs text-slate-500">Live cards populated dynamically for your selected personas</p>
+      </div>
+      <div class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg flex items-center space-x-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="feed-status-text">Feed Synchronized</span>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Loading Skeleton -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 animate-pulse space-y-4">
+        <div class="h-4 bg-slate-200 rounded w-1/3"></div>
+        <div class="h-8 bg-slate-200 rounded w-1/2"></div>
+        <div class="h-16 bg-slate-100 rounded"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Onboarding Wizard Modal -->
+  <div id="onboarding-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+      
+      <!-- Wizard Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center space-x-2">
+          <span class="px-2.5 py-1 rounded-md bg-[#1A237E] text-white text-xs font-black">MAUSAM</span>
+          <h3 class="font-bold text-slate-800 text-sm" id="wizard-step-title">Step 1: Welcome to Mausam</h3>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full" id="wizard-step-indicator">1 of 4</span>
+          <button onclick="closeOnboardingModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">&times;</button>
+        </div>
+      </div>
+
+      <!-- Step Progress Bar -->
+      <div class="w-full bg-slate-100 h-1">
+        <div id="wizard-progress" class="bg-indigo-600 h-1 transition-all duration-300" style="width: 25%"></div>
+      </div>
+
+      <!-- Wizard Step Content Container -->
+      <div class="p-6 overflow-y-auto flex-1" id="wizard-body">
+        <!-- Injected via Javascript based on currentStep -->
+      </div>
+
+      <!-- Wizard Modal Footer -->
+      <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+        <button id="wizard-prev-btn" onclick="wizardPrev()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 hidden">Back</button>
+        <div class="flex-1"></div>
+        <button id="wizard-next-btn" onclick="wizardNext()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm transition">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search City Modal -->
+  <div id="search-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+      
+      <!-- Search Modal Header -->
+      <div class="p-4 border-b border-slate-100 bg-slate-50 flex items-center space-x-3">
+        <div class="flex-1 relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-indigo-600 text-xl">search</span>
+          <input 
+            id="city-search-input" 
+            type="text" 
+            placeholder="Search city in India..." 
+            oninput="handleSearchInputChange(this.value)"
+            class="w-full pl-11 pr-10 py-3 rounded-2xl bg-white border border-slate-200 text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 transition shadow-inner"
+            autocomplete="off"
+          />
+          <button 
+            id="search-clear-btn" 
+            onclick="clearSearchInput()" 
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 hidden font-bold text-sm bg-slate-100 w-6 h-6 rounded-full flex items-center justify-center"
+          >✕</button>
+        </div>
+        <button onclick="closeSearchModal()" class="px-3 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-200 rounded-xl transition">Cancel</button>
+      </div>
+
+      <!-- Search Modal Body -->
+      <div class="p-4 overflow-y-auto flex-1 space-y-4" id="search-modal-body">
+        
+        <!-- Recents Container -->
+        <div id="search-recents-container" class="space-y-2 hidden">
+          <div class="flex items-center justify-between px-1">
+            <span class="text-[11px] font-extrabold text-indigo-900 uppercase tracking-wider flex items-center space-x-1">
+              <span class="material-symbols-outlined text-xs">history</span>
+              <span>Recently Searched</span>
+            </span>
+            <button onclick="clearRecentSearches()" class="text-[11px] font-bold text-slate-400 hover:text-rose-600 transition">Clear All</button>
+          </div>
+          <div id="search-recents-list" class="space-y-1"></div>
+          <hr class="border-slate-100 my-3">
+        </div>
+
+        <!-- Cities List Container -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between px-1">
+            <span id="search-list-title" class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center space-x-1">
+              <span class="material-symbols-outlined text-xs">location_city</span>
+              <span>Popular Indian Cities</span>
+            </span>
+            <span id="search-count-badge" class="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full">35+ Cities</span>
+          </div>
+          <div id="search-cities-list" class="space-y-1"></div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="search-empty-state" class="text-center py-10 space-y-3 hidden">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto flex items-center justify-center text-2xl">
+            <span class="material-symbols-outlined">travel_explore</span>
+          </div>
+          <h4 class="text-base font-bold text-slate-800">No matching city found</h4>
+          <p class="text-xs text-slate-500 max-w-xs mx-auto">Please check your spelling or search for a nearby major Indian district/hub.</p>
+        </div>
+
+      </div>
+
+      <!-- Selection Loading Overlay -->
+      <div id="search-loading-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-xs flex flex-col items-center justify-center space-y-3 hidden">
+        <div class="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-xs font-bold text-indigo-900">Fetching complete IMD weather feed...</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-8">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+      <p class="font-semibold text-slate-700">Mausam Mobile Weather Platform • India Meteorological Department (IMD)</p>
+      <p class="mt-1">FastAPI Microservices • Redis Geo-Grid Caching • Riverpod Polymorphic Cards • WebSocket Live Push</p>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE = window.location.origin;
+    const USER_ID = 'citizen_delhi_01';
+
+    const ALL_PERSONAS = [
+      { id: 'health', label: 'Health-Conscious', icon: 'favorite', desc: 'AQI, pollen, UV & humidity alerts', color: '#BA1A1A' },
+      { id: 'fitness', label: 'Fitness Enthusiast', icon: 'directions_run', desc: 'Best running hours, wind & heat alerts', color: '#2E7D32' },
+      { id: 'beach', label: 'Beachgoer / Surfer', icon: 'waves', desc: 'Tide times, wave height, sea temp', color: '#00639A' },
+      { id: 'travel', label: 'Traveler', icon: 'flight', desc: 'Destination weather & packing tips', color: '#6750A4' },
+      { id: 'family', label: 'Parent / Family', icon: 'family_restroom', desc: 'School commute & rain alerts', color: '#FF8F00' },
+      { id: 'agriculture', label: 'Farmer / Gardener', icon: 'eco', desc: 'Soil moisture, rainfall, frost alerts', color: '#33691E' },
+      { id: 'commute', label: 'Daily Commuter', icon: 'directions_car', desc: 'Traffic, visibility, fog/storm alerts', color: '#004D40' },
+      { id: 'events', label: 'Event Planner', icon: 'calendar_month', desc: 'Extended forecast & comfort index', color: '#6A1B9A' }
+    ];
+
+    let activePersonas = ['health', 'fitness', 'commute', 'family'];
+    let currentLocation = { name: 'New Delhi', lat: 28.6139, lon: 77.2090 };
+    let savedLocations = [
+      { name: 'Goa Coast', lat: 15.2993, lon: 74.1240, label: 'Beach Getaway' },
+      { name: 'Shimla Hills', lat: 31.1048, lon: 77.1734, label: 'Vacation' }
+    ];
+
+    // Onboarding Wizard State
+    let wizardStep = 0;
+    let wizardSelectedPersonas = new Set(['health', 'fitness', 'commute', 'family']);
+
+    // Render In-App Toggle Ribbon
+    function renderToggleBar() {
+      const bar = document.getElementById('persona-toggle-bar');
+      bar.innerHTML = '';
+      document.getElementById('active-persona-badge').innerText = `${activePersonas.length} Active`;
+
+      ALL_PERSONAS.forEach(p => {
+        const isChecked = activePersonas.includes(p.id);
+        const tile = document.createElement('div');
+        tile.className = `p-2.5 rounded-xl border flex flex-col items-center justify-between text-center cursor-pointer transition ${isChecked ? 'bg-indigo-50/70 border-indigo-300 shadow-sm' : 'bg-slate-50 border-slate-200 opacity-60 hover:opacity-100'}`;
+        tile.onclick = () => togglePersona(p.id);
+
+        tile.innerHTML = `
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white mb-1.5 shadow-xs" style="background-color: ${p.color}">
+            <span class="material-symbols-outlined text-base">${p.icon}</span>
+          </div>
+          <span class="text-[11px] font-bold text-slate-800 leading-tight">${p.label.split(' ')[0]}</span>
+          <div class="mt-2 w-full flex justify-center">
+            <span class="w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-black text-white ${isChecked ? 'bg-indigo-600' : 'bg-slate-300'}">
+              ${isChecked ? '✓' : ''}
+            </span>
+          </div>
+        `;
+        bar.appendChild(tile);
+      });
+    }
+
+    // In-App Instant Toggle
+    async function togglePersona(personaId) {
+      if (activePersonas.includes(personaId)) {
+        if (activePersonas.length <= 1) {
+          alert('At least 1 persona must remain selected to personalize your feed.');
+          return;
+        }
+        activePersonas = activePersonas.filter(x => x !== personaId);
+      } else {
+        activePersonas.push(personaId);
+      }
+
+      renderToggleBar();
+
+      // Persist to backend and reload feed immediately
+      try {
+        await fetch(`${API_BASE}/api/v1/users/${USER_ID}/personas`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ selected_personas: activePersonas })
+        });
+      } catch (_) {}
+
+      fetchFeed(currentLocation.name, currentLocation.lat, currentLocation.lon);
+    }
+
+    // Fetch and Render Dynamic Feed
+    async function fetchFeed(name, lat, lon) {
+      currentLocation = { name, lat, lon };
+      document.getElementById('loc-name').innerText = name + ', India';
+      document.getElementById('feed-status-text').innerText = 'Updating...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/v1/homepage-feed?user_id=${USER_ID}&lat=${lat}&lon=${lon}&location_name=${encodeURIComponent(name)}`);
+        const data = await res.json();
+        activePersonas = data.selected_personas || activePersonas;
+        renderToggleBar();
+        renderFeedCards(data);
+        document.getElementById('feed-status-text').innerText = 'Live Feed Synced';
+      } catch (e) {
+        console.error('Feed error:', e);
+        document.getElementById('feed-status-text').innerText = 'Offline Cache';
+      }
+    }
+
+    function getWeatherIconSvg(condition, isNight, rawIcon) {
+      const cond = (condition || '').toLowerCase();
+      
+      if (cond.includes('thunder') || cond.includes('lightning') || cond.includes('storm')) {
+        return `
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="stormCloud" x1="12" y1="20" x2="52" y2="48" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#475569"/>
+                <stop offset="1" stop-color="#1E293B"/>
+              </linearGradient>
+              <linearGradient id="boltGrad" x1="28" y1="36" x2="38" y2="58" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FDE047"/>
+                <stop offset="1" stop-color="#EAB308"/>
+              </linearGradient>
+            </defs>
+            <path d="M20 44h26a11 11 0 0 0 0-22 11.5 11.5 0 0 0-3.2.45A14 14 0 0 0 14 24a9.5 9.5 0 0 0 6 20z" fill="url(#stormCloud)"/>
+            <polygon points="34,36 28,48 35,48 30,60 42,46 35,46" fill="url(#boltGrad)"/>
+          </svg>
+        `;
+      }
+
+      if (cond.includes('rain') || cond.includes('shower') || cond.includes('drizzle') || cond.includes('squall')) {
+        return `
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="rainCloud" x1="12" y1="18" x2="50" y2="44" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#94A3B8"/>
+                <stop offset="1" stop-color="#475569"/>
+              </linearGradient>
+            </defs>
+            <path d="M20 40h24a11 11 0 0 0 0-22 11.5 11.5 0 0 0-3.2.45A14 14 0 0 0 14 20a9.5 9.5 0 0 0 6 20z" fill="url(#rainCloud)"/>
+            <g stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round">
+              <line x1="22" y1="46" x2="19" y2="54"/>
+              <line x1="32" y1="46" x2="29" y2="54"/>
+              <line x1="42" y1="46" x2="39" y2="54"/>
+            </g>
+          </svg>
+        `;
+      }
+
+      if (cond.includes('partly') || cond.includes('partial') || cond.includes('scattered') || cond.includes('few clouds')) {
+        if (isNight) {
+          return `
+            <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="moonGrad" x1="30" y1="8" x2="52" y2="30" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#E0E7FF"/>
+                  <stop offset="1" stop-color="#818CF8"/>
+                </linearGradient>
+                <linearGradient id="cloudNightGrad" x1="10" y1="24" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FFFFFF"/>
+                  <stop offset="1" stop-color="#CBD5E1"/>
+                </linearGradient>
+              </defs>
+              <path d="M46 22a11 11 0 0 1-11-11 11 11 0 1 0 12.5 14.3A10.9 10.9 0 0 1 46 22z" fill="url(#moonGrad)"/>
+              <circle cx="54" cy="14" r="1.5" fill="#E0E7FF"/>
+              <path d="M22 50h24a12 12 0 0 0 0-24 12.3 12.3 0 0 0-3.3.46A15 15 0 0 0 15 28.5 10 10 0 0 0 22 50z" fill="url(#cloudNightGrad)"/>
+            </svg>
+          `;
+        }
+        return `
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sunGrad" x1="34" y1="10" x2="52" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FDE047"/>
+                <stop offset="1" stop-color="#F59E0B"/>
+              </linearGradient>
+              <linearGradient id="cloudGrad" x1="12" y1="24" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF"/>
+                <stop offset="1" stop-color="#E2E8F0"/>
+              </linearGradient>
+            </defs>
+            <g>
+              <circle cx="43" cy="21" r="11" fill="url(#sunGrad)"/>
+              <line x1="43" y1="5" x2="43" y2="8" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="54.3" y1="9.7" x2="52.2" y2="11.8" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="59" y1="21" x2="56" y2="21" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="54.3" y1="32.3" x2="52.2" y2="30.2" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="31.7" y1="9.7" x2="33.8" y2="11.8" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <path d="M22 50h24a12 12 0 0 0 0-24 12.3 12.3 0 0 0-3.3.46A15 15 0 0 0 15 28.5 10 10 0 0 0 22 50z" fill="url(#cloudGrad)"/>
+          </svg>
+        `;
+      }
+
+      if (cond.includes('cloud') || cond.includes('overcast')) {
+        return `
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="backCloud" x1="18" y1="14" x2="54" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#CBD5E1"/>
+                <stop offset="1" stop-color="#94A3B8"/>
+              </linearGradient>
+              <linearGradient id="frontCloud" x1="10" y1="24" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF"/>
+                <stop offset="1" stop-color="#E2E8F0"/>
+              </linearGradient>
+            </defs>
+            <path d="M28 40h22a10 10 0 0 0 0-20 10.3 10.3 0 0 0-2.8.4A13 13 0 0 0 22 22a8.5 8.5 0 0 0 6 18z" fill="url(#backCloud)" opacity="0.85"/>
+            <path d="M20 50h24a12 12 0 0 0 0-24 12.3 12.3 0 0 0-3.3.46A15 15 0 0 0 13 28.5 10 10 0 0 0 20 50z" fill="url(#frontCloud)"/>
+          </svg>
+        `;
+      }
+
+      if (cond.includes('clear') || cond.includes('sunny')) {
+        if (isNight) {
+          return `
+            <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="clearMoonGrad" x1="20" y1="12" x2="48" y2="46" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#EEF2FF"/>
+                  <stop offset="1" stop-color="#818CF8"/>
+                </linearGradient>
+              </defs>
+              <path d="M42 42a18 18 0 0 1-18-18 18 18 0 1 0 20.5 23.4A17.9 17.9 0 0 1 42 42z" fill="url(#clearMoonGrad)"/>
+              <circle cx="48" cy="18" r="2" fill="#FDE047"/>
+              <circle cx="20" cy="14" r="1.5" fill="#E0E7FF"/>
+              <circle cx="52" cy="34" r="1.2" fill="#E0E7FF"/>
+            </svg>
+          `;
+        }
+        return `
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="clearSunGrad" x1="20" y1="20" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FEF08A"/>
+                <stop offset="0.5" stop-color="#FBBF24"/>
+                <stop offset="1" stop-color="#F59E0B"/>
+              </linearGradient>
+            </defs>
+            <circle cx="32" cy="32" r="14" fill="url(#clearSunGrad)"/>
+            <g stroke="#F59E0B" stroke-width="3" stroke-linecap="round">
+              <line x1="32" y1="8" x2="32" y2="13"/>
+              <line x1="32" y1="51" x2="32" y2="56"/>
+              <line x1="8" y1="32" x2="13" y2="32"/>
+              <line x1="51" y1="32" x2="56" y2="32"/>
+              <line x1="15" y1="15" x2="18.5" y2="18.5"/>
+              <line x1="45.5" y1="45.5" x2="49" y2="49"/>
+              <line x1="15" y1="49" x2="18.5" y2="45.5"/>
+              <line x1="45.5" y1="18.5" x2="49" y2="15"/>
+            </g>
+          </svg>
+        `;
+      }
+
+      if (cond.includes('fog') || cond.includes('mist') || cond.includes('haze') || cond.includes('smoke')) {
+        return `
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#E2E8F0" stroke-width="3" stroke-linecap="round" opacity="0.9">
+              <line x1="14" y1="24" x2="50" y2="24"/>
+              <line x1="10" y1="32" x2="54" y2="32"/>
+              <line x1="16" y1="40" x2="48" y2="40"/>
+              <line x1="12" y1="48" x2="44" y2="48"/>
+            </g>
+          </svg>
+        `;
+      }
+
+      return `
+        <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="defSun" x1="12" y1="12" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FDE047"/>
+              <stop offset="1" stop-color="#F59E0B"/>
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="15" fill="url(#defSun)"/>
+        </svg>
+      `;
+    }
+
+    function renderFeedCards(feed) {
+      document.getElementById('temp-display').innerText = `${Math.round(feed.current.temperature_c)}°C`;
+      document.getElementById('cond-text').innerText = `${feed.current.condition} • Feels like ${Math.round(feed.current.feels_like_c)}°C`;
+      document.getElementById('humidity-text').innerText = `${feed.current.humidity_pct}%`;
+      document.getElementById('wind-text').innerText = `${feed.current.wind_kph} km/h`;
+      document.getElementById('uv-text').innerText = `${feed.current.uv_index}`;
+
+      // Render Dynamic Condition Icon with Day/Night intelligence
+      const hour = new Date().getHours();
+      const isNight = hour < 6 || hour >= 19;
+      const heroIconEl = document.getElementById('weather-hero-icon');
+      if (heroIconEl) {
+        heroIconEl.innerHTML = getWeatherIconSvg(feed.current.condition, isNight, feed.current.icon);
+      }
+
+      if (feed.alerts && feed.alerts.length > 0) {
+        const al = feed.alerts[0];
+        document.getElementById('alert-title').innerText = al.headline;
+        document.getElementById('alert-desc').innerText = al.description;
+        document.getElementById('alert-container').classList.remove('hidden');
+      }
+
+      const grid = document.getElementById('cards-grid');
+      grid.innerHTML = '';
+
+      feed.cards.forEach(card => {
+        const el = document.createElement('div');
+        el.className = 'bg-white rounded-2xl border border-slate-200 p-5 shadow-sm card-lift flex flex-col justify-between';
+        
+        let detailsHtml = '';
+        if (card.persona === 'health') {
+          const d = card.data;
+          detailsHtml = `
+            <div class="mt-3 flex items-center justify-between">
+              <div class="px-3 py-2 bg-rose-50 border border-rose-200 rounded-xl text-center">
+                <span class="text-xl font-extrabold text-rose-700">${d.aqi}</span>
+                <span class="block text-[10px] font-bold text-rose-800 uppercase">${d.aqi_category}</span>
+              </div>
+              <div class="text-xs space-y-1 text-slate-600 text-right">
+                <p>PM2.5: <span class="font-bold">${d.pm25} µg/m³</span></p>
+                <p>Pollen: <span class="font-bold text-indigo-600">${d.pollen_count}</span></p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 bg-slate-50 p-2 rounded-lg">${d.health_advice}</p>
+          `;
+        } else if (card.persona === 'fitness') {
+          const d = card.data;
+          detailsHtml = `
+            <div class="mt-3 flex justify-between items-center">
+              <div>
+                <span class="text-2xl font-black text-emerald-600">${d.outdoor_workout_score}</span>
+                <span class="text-xs text-slate-400">/100 Readiness</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] font-bold text-slate-400 uppercase">Golden Hour</span>
+                <p class="text-xs font-bold text-orange-600">${d.golden_running_hours[0] || '05:30 AM'}</p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 bg-slate-50 p-2 rounded-lg">${d.recommendation}</p>
+          `;
+        } else if (card.persona === 'beach') {
+          const d = card.data;
+          detailsHtml = `
+            <div class="mt-3 flex justify-between items-center">
+              <div>
+                <span class="text-xs text-slate-400 block">Next High Tide</span>
+                <span class="text-sm font-bold text-blue-700">${d.next_high_tide}</span>
+              </div>
+              <span class="px-2.5 py-1 rounded text-xs font-extrabold bg-emerald-100 text-emerald-800 uppercase">${d.swim_safety}</span>
+            </div>
+            <div class="mt-3 text-xs text-slate-600 flex justify-between border-t border-slate-100 pt-2">
+              <span>Wave: <b>${d.wave_height_m}m</b></span>
+              <span>Sea Temp: <b>${d.sea_surface_temp_c}°C</b></span>
+            </div>
+          `;
+        } else if (card.persona === 'agriculture') {
+          const d = card.data;
+          detailsHtml = `
+            <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+              <div class="bg-emerald-50 p-2 rounded-lg">
+                <span class="text-slate-500 block text-[10px]">Soil Moisture</span>
+                <span class="font-bold text-emerald-800">${d.soil_moisture_surface_pct}%</span>
+              </div>
+              <div class="bg-blue-50 p-2 rounded-lg">
+                <span class="text-slate-500 block text-[10px]">72h Rain</span>
+                <span class="font-bold text-blue-800">${d.rainfall_prediction_72h_mm} mm</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 bg-slate-50 p-2 rounded-lg">${d.irrigation_recommendation}</p>
+          `;
+        } else if (card.persona === 'commute') {
+          const d = card.data;
+          detailsHtml = `
+            <div class="mt-3 flex justify-between items-center">
+              <div>
+                <span class="text-xs text-slate-400 block">Visibility</span>
+                <span class="text-sm font-bold text-slate-800">${d.dominant_visibility_m} Meters (${d.visibility_status})</span>
+              </div>
+              ${d.recommended_departure_delta_mins > 0 ? `<span class="px-2 py-1 bg-amber-100 text-amber-800 font-bold text-[10px] rounded">+${d.recommended_departure_delta_mins}m Buffer</span>` : ''}
+            </div>
+          `;
+        } else if (card.persona === 'travel') {
+          const d = card.data;
+          detailsHtml = `
+            <div class="mt-3 space-y-1.5 text-xs">
+              ${d.saved_destinations.slice(0, 2).map(dest => `
+                <div class="flex justify-between items-center bg-slate-50 p-1.5 rounded-md">
+                  <span class="font-medium">${dest.city}</span>
+                  <span class="font-bold text-indigo-700">${dest.temp_c}°C • ${dest.condition}</span>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        } else if (card.persona === 'family') {
+          const d = card.data;
+          detailsHtml = `
+            <div class="mt-3 flex justify-between items-center text-xs">
+              <div>
+                <span class="text-slate-400 block text-[10px]">School Commute</span>
+                <span class="font-bold text-slate-800">${d.school_commute_status}</span>
+              </div>
+              <span class="px-2 py-1 bg-amber-100 text-amber-900 rounded font-bold text-[10px]">Rain: ${d.rain_window_start}</span>
+            </div>
+          `;
+        } else {
+          detailsHtml = `<p class="text-xs text-slate-500 mt-3 bg-slate-50 p-2 rounded-lg">Real-time IMD data active for ${card.title}.</p>`;
+        }
+
+        el.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-900">${card.title}</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5">${card.subtitle || ''}</p>
+            ${detailsHtml}
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+    }
+
+    // --- Onboarding Wizard Logic ---
+    function openOnboardingModal() {
+      wizardStep = 0;
+      wizardSelectedPersonas = new Set(activePersonas);
+      document.getElementById('onboarding-modal').classList.remove('hidden');
+      renderWizardStep();
+    }
+
+    function closeOnboardingModal() {
+      document.getElementById('onboarding-modal').classList.add('hidden');
+    }
+
+    function renderWizardStep() {
+      const stepTitle = document.getElementById('wizard-step-title');
+      const stepIndicator = document.getElementById('wizard-step-indicator');
+      const progress = document.getElementById('wizard-progress');
+      const body = document.getElementById('wizard-body');
+      const prevBtn = document.getElementById('wizard-prev-btn');
+      const nextBtn = document.getElementById('wizard-next-btn');
+
+      stepIndicator.innerText = `${wizardStep + 1} of 4`;
+      progress.style.width = `${(wizardStep + 1) * 25}%`;
+      prevBtn.classList.toggle('hidden', wizardStep === 0);
+
+      if (wizardStep === 0) {
+        stepTitle.innerText = 'Step 1: Welcome to Mausam';
+        nextBtn.innerText = "Let's Personalize";
+        body.innerHTML = `
+          <div class="space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-indigo-900 flex items-center justify-center text-amber-300 text-3xl shadow-lg">
+              <span class="material-symbols-outlined">wb_sunny</span>
+            </div>
+            <h4 class="text-2xl font-extrabold text-slate-900">Weather Tailored to Your Life</h4>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Mausam replaces static, generic weather reports with real-time actionable insights customized for your health, workouts, travel, farming, or daily commute.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+                <span class="font-bold text-indigo-900 block">⚡ Real-time Microservices</span>
+                <span class="text-slate-500">Live data from CPCB, INCOIS & IMD NWP models</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+                <span class="font-bold text-indigo-900 block">🔔 Sub-Second Severe Alerts</span>
+                <span class="text-slate-500">Instant WebSocket bulletins for storms & floods</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (wizardStep === 1) {
+        stepTitle.innerText = 'Step 2: Select Your Personas';
+        nextBtn.innerText = `Continue (${wizardSelectedPersonas.size} selected)`;
+        nextBtn.disabled = wizardSelectedPersonas.size === 0;
+
+        let tilesHtml = ALL_PERSONAS.map(p => {
+          const isSelected = wizardSelectedPersonas.has(p.id);
+          return `
+            <div onclick="wizardTogglePersona('${p.id}')" class="tile-scale p-3.5 rounded-2xl border-2 cursor-pointer ${isSelected ? 'border-indigo-600 bg-indigo-50/60 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300'}">
+              <div class="flex items-center justify-between mb-2">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white" style="background-color: ${p.color}">
+                  <span class="material-symbols-outlined text-lg">${p.icon}</span>
+                </div>
+                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${isSelected ? 'bg-indigo-600 text-white' : 'border border-slate-300'}">
+                  ${isSelected ? '✓' : ''}
+                </div>
+              </div>
+              <p class="text-xs font-bold text-slate-800">${p.label}</p>
+              <p class="text-[11px] text-slate-500 mt-1 leading-snug">${p.desc}</p>
+            </div>
+          `;
+        }).join('');
+
+        body.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <p class="text-xs text-slate-500 font-medium">Select all personas that match your daily lifestyle:</p>
+              <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">${wizardSelectedPersonas.size} selected</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-1">
+              ${tilesHtml}
+            </div>
+          </div>
+        `;
+      } else if (wizardStep === 2) {
+        stepTitle.innerText = 'Step 3: Location Setup';
+        nextBtn.innerText = 'Review & Finalize';
+        body.innerHTML = `
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Primary GPS Location</label>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-indigo-200 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <span class="material-symbols-outlined text-indigo-600 text-xl">my_location</span>
+                  <div>
+                    <p class="text-xs font-bold text-slate-800">${currentLocation.name}, India</p>
+                    <p class="text-[10px] text-slate-500">Lat: ${currentLocation.lat}, Lon: ${currentLocation.lon}</p>
+                  </div>
+                </div>
+                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">GPS Calibrated</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Saved Destinations (For Travel & Family)</label>
+              <div class="space-y-2">
+                ${savedLocations.map(l => `
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-lg flex items-center justify-between text-xs">
+                    <span class="font-medium text-slate-700">📍 ${l.name}</span>
+                    <span class="text-slate-400 text-[10px]">${l.label}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (wizardStep === 3) {
+        stepTitle.innerText = 'Step 4: Ready to Launch';
+        nextBtn.innerText = 'Go to My Homepage';
+        const personaChips = Array.from(wizardSelectedPersonas).map(id => {
+          const found = ALL_PERSONAS.find(x => x.id === id);
+          return `<span class="px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-xs" style="background-color: ${found.color}">${found.label}</span>`;
+        }).join('');
+
+        body.innerHTML = `
+          <div class="text-center space-y-4 py-2">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center text-3xl">
+              <span class="material-symbols-outlined">check_circle</span>
+            </div>
+            <h4 class="text-xl font-extrabold text-slate-900">Your Personalized Feed is Ready!</h4>
+            <p class="text-xs text-slate-600 max-w-md mx-auto">
+              We have configured your custom layout with <b>${wizardSelectedPersonas.size} active modules</b> for ${currentLocation.name}.
+            </p>
+            <div class="flex flex-wrap justify-center gap-2 pt-2">
+              ${personaChips}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function wizardTogglePersona(id) {
+      if (wizardSelectedPersonas.has(id)) {
+        if (wizardSelectedPersonas.size > 1) {
+          wizardSelectedPersonas.delete(id);
+        }
+      } else {
+        wizardSelectedPersonas.add(id);
+      }
+      renderWizardStep();
+    }
+
+    function wizardPrev() {
+      if (wizardStep > 0) {
+        wizardStep--;
+        renderWizardStep();
+      }
+    }
+
+    async function wizardNext() {
+      if (wizardStep < 3) {
+        wizardStep++;
+        renderWizardStep();
+      } else {
+        // Complete onboarding
+        activePersonas = Array.from(wizardSelectedPersonas);
+        closeOnboardingModal();
+        renderToggleBar();
+
+        try {
+          await fetch(`${API_BASE}/api/v1/onboarding/complete`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              user_id: USER_ID,
+              selected_personas: activePersonas,
+              primary_location: {
+                name: currentLocation.name + ', India',
+                latitude: currentLocation.lat,
+                longitude: currentLocation.lon,
+                is_primary: true
+              },
+              saved_locations: savedLocations.map(l => ({
+                name: l.name,
+                latitude: l.lat,
+                longitude: l.lon,
+                label: l.label
+              }))
+            })
+          });
+        } catch (_) {}
+
+        fetchFeed(currentLocation.name, currentLocation.lat, currentLocation.lon);
+      }
+    }
+
+    async function simulateAlert() {
+      try {
+        const res = await fetch(`${API_BASE}/api/v1/alerts/simulate?severity=severe&headline=Red%20Alert:%20Heavy%20Squall%20%26%20Flash%20Flood%20Warning`, { method: 'POST' });
+        const data = await res.json();
+        document.getElementById('alert-title').innerText = data.alert.headline;
+        document.getElementById('alert-desc').innerText = data.alert.description;
+        document.getElementById('alert-container').classList.remove('hidden');
+      } catch (e) {
+        console.error('Simulation error:', e);
+      }
+    }
+
+    // --- City Search Engine Logic ---
+    const INDIAN_CITIES = [
+      { name: 'New Delhi', state: 'Delhi', lat: 28.6139, lon: 77.2090, popular: true, region: 'North' },
+      { name: 'Mumbai', state: 'Maharashtra', lat: 19.0760, lon: 72.8777, popular: true, region: 'West' },
+      { name: 'Bengaluru', state: 'Karnataka', lat: 12.9716, lon: 77.5946, popular: true, region: 'South' },
+      { name: 'Chennai', state: 'Tamil Nadu', lat: 13.0827, lon: 80.2707, popular: true, region: 'South' },
+      { name: 'Kolkata', state: 'West Bengal', lat: 22.5726, lon: 88.3639, popular: true, region: 'East' },
+      { name: 'Hyderabad', state: 'Telangana', lat: 17.3850, lon: 78.4867, popular: true, region: 'South' },
+      { name: 'Pune', state: 'Maharashtra', lat: 18.5204, lon: 73.8567, popular: true, region: 'West' },
+      { name: 'Ahmedabad', state: 'Gujarat', lat: 23.0225, lon: 72.5714, popular: true, region: 'West' },
+      { name: 'Jaipur', state: 'Rajasthan', lat: 26.9124, lon: 75.7873, popular: true, region: 'North' },
+      { name: 'Lucknow', state: 'Uttar Pradesh', lat: 26.8467, lon: 80.9462, popular: true, region: 'North' },
+      { name: 'Chandigarh', state: 'Chandigarh', lat: 30.7333, lon: 76.7794, popular: true, region: 'North' },
+      { name: 'Kochi', state: 'Kerala', lat: 9.9312, lon: 76.2673, popular: true, region: 'South' },
+      { name: 'Bhopal', state: 'Madhya Pradesh', lat: 23.2599, lon: 77.4126, popular: true, region: 'Central' },
+      { name: 'Surat', state: 'Gujarat', lat: 21.1702, lon: 72.8311, popular: true, region: 'West' },
+      { name: 'Nagpur', state: 'Maharashtra', lat: 21.1458, lon: 79.0882, popular: true, region: 'Central' },
+      { name: 'Indore', state: 'Madhya Pradesh', lat: 22.7196, lon: 75.8577, popular: true, region: 'Central' },
+      { name: 'Patna', state: 'Bihar', lat: 25.5941, lon: 85.1376, popular: true, region: 'East' },
+      { name: 'Guwahati', state: 'Assam', lat: 26.1445, lon: 91.7362, popular: true, region: 'Northeast' },
+      { name: 'Thiruvananthapuram', state: 'Kerala', lat: 8.5241, lon: 76.9366, popular: true, region: 'South' },
+      { name: 'Shimla', state: 'Himachal Pradesh', lat: 31.1048, lon: 77.1734, popular: true, region: 'North' },
+      { name: 'Srinagar', state: 'Jammu & Kashmir', lat: 34.0837, lon: 74.7973, popular: true, region: 'North' },
+      { name: 'Goa (Panaji)', state: 'Goa', lat: 15.4909, lon: 73.8278, popular: true, region: 'West' },
+      { name: 'Varanasi', state: 'Uttar Pradesh', lat: 25.3176, lon: 82.9739, popular: true, region: 'North' },
+      { name: 'Bhubaneswar', state: 'Odisha', lat: 20.2961, lon: 85.8245, popular: true, region: 'East' },
+      { name: 'Dehradun', state: 'Uttarakhand', lat: 30.3165, lon: 78.0322, popular: true, region: 'North' },
+      { name: 'Amritsar', state: 'Punjab', lat: 31.6340, lon: 74.8723, popular: true, region: 'North' },
+      { name: 'Visakhapatnam', state: 'Andhra Pradesh', lat: 17.6868, lon: 83.2185, popular: true, region: 'South' },
+      { name: 'Agra', state: 'Uttar Pradesh', lat: 27.1767, lon: 78.0081, popular: true, region: 'North' },
+      { name: 'Ludhiana', state: 'Punjab', lat: 30.9010, lon: 75.8573, popular: false, region: 'North' },
+      { name: 'Raipur', state: 'Chhattisgarh', lat: 21.2514, lon: 81.6296, popular: false, region: 'Central' },
+      { name: 'Ranchi', state: 'Jharkhand', lat: 23.3441, lon: 85.3096, popular: false, region: 'East' },
+      { name: 'Coimbatore', state: 'Tamil Nadu', lat: 11.0168, lon: 76.9558, popular: false, region: 'South' },
+      { name: 'Vadodara', state: 'Gujarat', lat: 22.3072, lon: 73.1812, popular: false, region: 'West' },
+      { name: 'Mysuru', state: 'Karnataka', lat: 12.2958, lon: 76.6394, popular: false, region: 'South' },
+      { name: 'Shillong', state: 'Meghalaya', lat: 25.5788, lon: 91.8933, popular: false, region: 'Northeast' },
+      { name: 'Port Blair', state: 'Andaman & Nicobar', lat: 11.6234, lon: 92.7265, popular: false, region: 'Islands' }
+    ];
+
+    let searchDebounceTimer = null;
+
+    function getRecentsFromStorage() {
+      try {
+        return JSON.parse(localStorage.getItem('mausam_recent_cities') || '[]');
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function saveRecentToStorage(city) {
+      try {
+        let recents = getRecentsFromStorage().filter(c => c.name.toLowerCase() !== city.name.toLowerCase());
+        recents.unshift({ name: city.name, state: city.state, lat: city.lat, lon: city.lon, region: city.region });
+        if (recents.length > 5) recents = recents.slice(0, 5);
+        localStorage.setItem('mausam_recent_cities', JSON.stringify(recents));
+      } catch (_) {}
+    }
+
+    function clearRecentSearches() {
+      try {
+        localStorage.removeItem('mausam_recent_cities');
+      } catch (_) {}
+      renderSearchResults(document.getElementById('city-search-input').value);
+    }
+
+    function getFavoritesFromStorage() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem('mausam_favorite_cities') || '[]'));
+      } catch (_) {
+        return new Set();
+      }
+    }
+
+    function toggleFavoriteCity(cityName, state, event) {
+      if (event) event.stopPropagation();
+      const favs = getFavoritesFromStorage();
+      const key = `${cityName.toLowerCase()}_${state.toLowerCase()}`;
+      if (favs.has(key)) {
+        favs.delete(key);
+      } else {
+        favs.add(key);
+      }
+      try {
+        localStorage.setItem('mausam_favorite_cities', JSON.stringify(Array.from(favs)));
+      } catch (_) {}
+      renderSearchResults(document.getElementById('city-search-input').value);
+    }
+
+    function openSearchModal() {
+      document.getElementById('search-modal').classList.remove('hidden');
+      const input = document.getElementById('city-search-input');
+      input.value = '';
+      document.getElementById('search-clear-btn').classList.add('hidden');
+      renderSearchResults('');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closeSearchModal() {
+      document.getElementById('search-modal').classList.add('hidden');
+      document.getElementById('search-loading-overlay').classList.add('hidden');
+    }
+
+    function clearSearchInput() {
+      const input = document.getElementById('city-search-input');
+      input.value = '';
+      document.getElementById('search-clear-btn').classList.add('hidden');
+      renderSearchResults('');
+      input.focus();
+    }
+
+    function handleSearchInputChange(val) {
+      const clearBtn = document.getElementById('search-clear-btn');
+      clearBtn.classList.toggle('hidden', !val || val.length === 0);
+
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        renderSearchResults(val);
+      }, 200);
+    }
+
+    function highlightMatch(text, query) {
+      if (!query || query.trim() === '') return text;
+      const q = query.trim();
+      const index = text.toLowerCase().indexOf(q.toLowerCase());
+      if (index === -1) return text;
+      const prefix = text.substring(0, index);
+      const match = text.substring(index, index + q.length);
+      const suffix = text.substring(index + q.length);
+      return `${prefix}<mark class="bg-indigo-100 text-indigo-900 font-extrabold px-0.5 rounded">${match}</mark>${suffix}`;
+    }
+
+    function renderSearchResults(query) {
+      const trimmed = (query || '').trim().toLowerCase();
+      const recentsContainer = document.getElementById('search-recents-container');
+      const recentsList = document.getElementById('search-recents-list');
+      const citiesList = document.getElementById('search-cities-list');
+      const emptyState = document.getElementById('search-empty-state');
+      const listTitle = document.getElementById('search-list-title');
+      const countBadge = document.getElementById('search-count-badge');
+      const favs = getFavoritesFromStorage();
+
+      citiesList.innerHTML = '';
+      recentsList.innerHTML = '';
+
+      if (!trimmed) {
+        // Default State: Show Recents & Popular
+        const recents = getRecentsFromStorage();
+        if (recents.length > 0) {
+          recentsContainer.classList.remove('hidden');
+          recents.forEach(city => {
+            const isFav = favs.has(`${city.name.toLowerCase()}_${city.state.toLowerCase()}`);
+            const el = document.createElement('div');
+            el.className = 'p-3 rounded-2xl bg-white hover:bg-indigo-50/70 border border-slate-200 hover:border-indigo-300 flex items-center justify-between cursor-pointer transition shadow-2xs';
+            el.onclick = () => selectCityFromSearch(city.name, city.state, city.lat, city.lon, city.region);
+            el.innerHTML = `
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-sm">history</span>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-slate-800">${city.name}</p>
+                  <p class="text-[10px] text-slate-400 font-medium">${city.state}</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button onclick="toggleFavoriteCity('${city.name}', '${city.state}', event)" class="p-1 text-slate-300 hover:text-amber-500 transition">
+                  <span class="material-symbols-outlined text-lg ${isFav ? 'text-amber-500 fill-1' : ''}">star</span>
+                </button>
+                <span class="material-symbols-outlined text-slate-300 text-base">chevron_right</span>
+              </div>
+            `;
+            recentsList.appendChild(el);
+          });
+        } else {
+          recentsContainer.classList.add('hidden');
+        }
+
+        listTitle.innerHTML = '<span class="material-symbols-outlined text-xs">location_city</span><span>Popular Indian Cities</span>';
+        countBadge.innerText = `${INDIAN_CITIES.filter(c => c.popular).length} Cities`;
+
+        const popular = INDIAN_CITIES.filter(c => c.popular);
+        popular.forEach(city => {
+          const isFav = favs.has(`${city.name.toLowerCase()}_${city.state.toLowerCase()}`);
+          const el = document.createElement('div');
+          el.className = 'p-3 rounded-2xl bg-white hover:bg-indigo-50/70 border border-slate-200 hover:border-indigo-300 flex items-center justify-between cursor-pointer transition shadow-2xs';
+          el.onclick = () => selectCityFromSearch(city.name, city.state, city.lat, city.lon, city.region);
+          el.innerHTML = `
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center">
+                <span class="material-symbols-outlined text-sm">location_on</span>
+              </div>
+              <div>
+                <div class="flex items-center space-x-1.5">
+                  <p class="text-xs font-bold text-slate-800">${city.name}</p>
+                  <span class="text-[9px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded">${city.region}</span>
+                </div>
+                <p class="text-[10px] text-slate-400 font-medium">${city.state}</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="toggleFavoriteCity('${city.name}', '${city.state}', event)" class="p-1 text-slate-300 hover:text-amber-500 transition">
+                <span class="material-symbols-outlined text-lg ${isFav ? 'text-amber-500 fill-1' : ''}">star</span>
+              </button>
+              <span class="material-symbols-outlined text-slate-300 text-base">chevron_right</span>
+            </div>
+          `;
+          citiesList.appendChild(el);
+        });
+
+        emptyState.classList.add('hidden');
+        return;
+      }
+
+      // Filtered search state
+      recentsContainer.classList.add('hidden');
+
+      // Score and filter
+      const scored = [];
+      INDIAN_CITIES.forEach(city => {
+        const c = city.name.toLowerCase();
+        const s = city.state.toLowerCase();
+        let score = -1;
+        if (c === trimmed) score = 1;
+        else if (c.startsWith(trimmed)) score = 2;
+        else if (s.startsWith(trimmed)) score = 3;
+        else if (c.includes(trimmed)) score = 4;
+        else if (s.includes(trimmed)) score = 5;
+
+        if (score !== -1) {
+          scored.push({ city, score });
+        }
+      });
+
+      scored.sort((a, b) => a.score - b.score || a.city.name.localeCompare(b.city.name));
+
+      if (scored.length === 0) {
+        listTitle.innerHTML = '<span>Results</span>';
+        countBadge.innerText = '0 Found';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      listTitle.innerHTML = `<span class="material-symbols-outlined text-xs">search</span><span>Matching Cities</span>`;
+      countBadge.innerText = `${scored.length} Found`;
+
+      scored.forEach(({ city }) => {
+        const isFav = favs.has(`${city.name.toLowerCase()}_${city.state.toLowerCase()}`);
+        const el = document.createElement('div');
+        el.className = 'p-3 rounded-2xl bg-white hover:bg-indigo-50/70 border border-slate-200 hover:border-indigo-300 flex items-center justify-between cursor-pointer transition shadow-2xs';
+        el.onclick = () => selectCityFromSearch(city.name, city.state, city.lat, city.lon, city.region);
+        el.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
+              <span class="material-symbols-outlined text-sm">place</span>
+            </div>
+            <div>
+              <div class="flex items-center space-x-1.5">
+                <p class="text-xs font-bold text-slate-800">${highlightMatch(city.name, trimmed)}</p>
+                <span class="text-[9px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded">${city.region}</span>
+              </div>
+              <p class="text-[10px] text-slate-400 font-medium">${highlightMatch(city.state, trimmed)}</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="toggleFavoriteCity('${city.name}', '${city.state}', event)" class="p-1 text-slate-300 hover:text-amber-500 transition">
+              <span class="material-symbols-outlined text-lg ${isFav ? 'text-amber-500 fill-1' : ''}">star</span>
+            </button>
+            <span class="material-symbols-outlined text-slate-300 text-base">chevron_right</span>
+          </div>
+        `;
+        citiesList.appendChild(el);
+      });
+    }
+
+    async function selectCityFromSearch(name, state, lat, lon, region) {
+      saveRecentToStorage({ name, state, lat, lon, region });
+      document.getElementById('search-loading-overlay').classList.remove('hidden');
+
+      try {
+        await fetchFeed(`${name}, ${state}`, lat, lon);
+        closeSearchModal();
+      } catch (e) {
+        alert(`Couldn't fetch weather for ${name}, please try again.`);
+        document.getElementById('search-loading-overlay').classList.add('hidden');
+      }
+    }
+
+    // Connect WebSocket
+    try {
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const ws = new WebSocket(`${wsProtocol}//${window.location.host}/api/v1/alerts/ws`);
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'SEVERE_WEATHER_ALERT') {
+          document.getElementById('alert-title').innerText = msg.data.headline;
+          document.getElementById('alert-desc').innerText = msg.data.description;
+          document.getElementById('alert-container').classList.remove('hidden');
+        }
+      };
+    } catch (_) {}
+
+    // Init
+    renderToggleBar();
+    fetchFeed('New Delhi', 28.6139, 77.2090);
+  </script>
+</body>
+</html>

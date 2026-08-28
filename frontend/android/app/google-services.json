@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1038194487991",
+    "project_id": "mausam-499db",
+    "storage_bucket": "mausam-499db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038194487991:android:fc7cf78ab84112afc19332",
+        "android_client_info": {
+          "package_name": "in.gov.imd.mausam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvaeUSQJx6yfvHlSDr9_5mrCntgRKgCyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
