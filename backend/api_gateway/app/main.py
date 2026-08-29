@@ -9,29 +9,16 @@ for p in [repo_root, backend_dir, current_dir]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
-from backend.api_gateway.app.database import init_db
 from backend.api_gateway.app.routers import feed, personas, layout, alerts, auth
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup: Initialize Database tables (graceful on serverless cold starts)
-    try:
-        await init_db()
-    except Exception as e:
-        print(f"Non-fatal DB init note: {e}")
-    yield
-    # Shutdown
 
 app = FastAPI(
     title="Mausam API Gateway (India Meteorological Department)",
     description="Unified API Gateway coordinating real-time personalized weather feed, persona microservices, Redis caching, and WebSocket alert streaming.",
-    version="1.0.0",
-    lifespan=lifespan
+    version="1.0.0"
 )
 
 # CORS middleware for mobile/web app access
@@ -71,7 +58,4 @@ async def health_check():
         "version": "1.0.0"
     }
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
 

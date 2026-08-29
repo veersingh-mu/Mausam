@@ -82,17 +82,30 @@ class DBSavedLocation(Base):
     is_default = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+_db_initialized = False
+
 async def init_db():
+    global _db_initialized
+    if _db_initialized:
+        return
     try:
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
+        _db_initialized = True
         logger.info("Database initialized successfully.")
     except Exception as e:
         logger.error(f"Database initialization error: {e}")
 
 async def get_db():
+    global _db_initialized
+    if not _db_initialized:
+        try:
+            await init_db()
+        except Exception:
+            pass
     async with AsyncSessionLocal() as session:
         try:
             yield session
         finally:
             await session.close()
+
