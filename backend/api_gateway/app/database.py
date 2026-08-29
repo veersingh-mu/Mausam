@@ -9,13 +9,20 @@ from sqlalchemy import Column, String, Integer, Boolean, DateTime, JSON, Foreign
 
 logger = logging.getLogger("mausam.db")
 
-is_vercel = os.getenv("VERCEL") == "1" or os.getenv("AWS_LAMBDA_FUNCTION_NAME") is not None
-default_db = "sqlite+aiosqlite:////tmp/mausam_local.db" if is_vercel else "sqlite+aiosqlite:///./mausam_local.db"
+is_serverless = bool(
+    os.getenv("VERCEL") 
+    or os.getenv("VERCEL_ENV")
+    or os.getenv("AWS_LAMBDA_FUNCTION_NAME") 
+    or os.getenv("AWS_EXECUTION_ENV")
+    or os.getenv("LAMBDA_TASK_ROOT")
+)
+
+default_db = "sqlite+aiosqlite:////tmp/mausam_local.db" if is_serverless else "sqlite+aiosqlite:///./mausam_local.db"
 
 DATABASE_URL = os.getenv("DATABASE_URL", default_db)
 
 # If in serverless and local sqlite path is given, redirect to writable /tmp
-if is_vercel and "sqlite" in DATABASE_URL and not DATABASE_URL.startswith("sqlite+aiosqlite:////tmp/"):
+if is_serverless and "sqlite" in DATABASE_URL and not DATABASE_URL.startswith("sqlite+aiosqlite:////tmp/"):
     DATABASE_URL = "sqlite+aiosqlite:////tmp/mausam_local.db"
 
 # If using PostgreSQL in docker/production, postgresql+asyncpg://...
