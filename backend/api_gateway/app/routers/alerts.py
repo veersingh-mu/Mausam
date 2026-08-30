@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query, BackgroundTasks
 from datetime import datetime, timedelta
 
-from backend.api_gateway.app.websockets import ws_alert_manager
+from backend.api_gateway.app.ws_manager import ws_alert_manager
 from backend.services.alerts_service.app.adapters.imd_alerts_adapter import IMDAlertsAdapter
 from backend.services.alerts_service.app.fcm_client import FCMClient
 from backend.shared.models import SevereAlert, AlertSeverity
