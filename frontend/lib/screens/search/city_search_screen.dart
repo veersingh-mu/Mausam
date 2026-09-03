@@ -5,19 +5,52 @@ import '../../core/theme/app_typography.dart';
 import '../../models/city_model.dart';
 import '../../state/city_search_provider.dart';
 
-class CitySearchScreen extends ConsumerStatefulWidget {
-  const CitySearchScreen({Key? key}) : super(key: key);
+import '../../core/responsive/responsive_breakpoints.dart';
 
+class CitySearchScreen extends ConsumerStatefulWidget {
+  final bool isModalDialog;
+
+  const CitySearchScreen({Key? key, this.isModalDialog = false}) : super(key: key);
+
+  /// Automatically adapts presentation:
+  /// - Mobile (< 600px): Smooth bottom sheet modal
+  /// - Tablet/Desktop (>= 600px): Centered floating dialog (max-width ~520px)
   static Future<void> showAsBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) => const FractionallySizedBox(
-        heightFactor: 0.92,
-        child: CitySearchScreen(),
-      ),
-    );
+    final isCompact = ResponsiveBreakpoints.isCompact(context);
+
+    if (isCompact) {
+      return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => const FractionallySizedBox(
+          heightFactor: 0.92,
+          child: CitySearchScreen(),
+        ),
+      );
+    } else {
+      return showDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierColor: Colors.black.withOpacity(0.5),
+        builder: (_) => Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 520,
+                maxHeight: 720,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: const CitySearchScreen(isModalDialog: true),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -140,9 +173,11 @@ class _CitySearchScreenState extends ConsumerState<CitySearchScreen> {
     final isQueryEmpty = searchState.query.isEmpty;
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.background,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: widget.isModalDialog
+            ? BorderRadius.circular(24)
+            : const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: SafeArea(
         top: true,

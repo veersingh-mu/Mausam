@@ -1,0 +1,11 @@
+{
+  "name": "Mausam - IMD Weather",
+  "short_name": "Mausam",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F8F9FE",
+  "theme_color": "#000666",
+  "description": "Mausam - India Meteorological Department Modular Personalized Weather Platform",
+  "orientation": "any",
+  "prefer_related_applications": false
+}

@@ -5,6 +5,7 @@ import '../../core/theme/app_typography.dart';
 import '../../models/persona_type.dart';
 import '../../state/homepage_feed_provider.dart';
 import '../../state/layout_customization_provider.dart';
+import '../../core/responsive/responsive_layout.dart';
 
 class CustomizeHomepageScreen extends ConsumerStatefulWidget {
   const CustomizeHomepageScreen({Key? key}) : super(key: key);
@@ -70,7 +71,9 @@ class _CustomizeHomepageScreenState extends ConsumerState<CustomizeHomepageScree
         ],
       ),
       body: SafeArea(
-        child: Column(
+        child: ResponsiveContainer(
+          maxWidth: 860,
+          child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -153,6 +156,7 @@ class _CustomizeHomepageScreenState extends ConsumerState<CustomizeHomepageScree
               ),
             ),
           ],
+        ),
         ),
       ),
     );

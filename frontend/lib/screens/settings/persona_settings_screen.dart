@@ -5,6 +5,7 @@ import '../../core/theme/app_typography.dart';
 import '../../models/persona_type.dart';
 import '../../state/user_persona_provider.dart';
 import '../../widgets/persona_toggle_sheet.dart';
+import '../../core/responsive/responsive_layout.dart';
 
 class PersonaSettingsScreen extends ConsumerWidget {
   const PersonaSettingsScreen({Key? key}) : super(key: key);
@@ -19,9 +20,11 @@ class PersonaSettingsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('My Weather Personas'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
+      body: ResponsiveContainer(
+        maxWidth: 860,
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
           // Info banner
           Container(
             padding: const EdgeInsets.all(16),
@@ -129,6 +132,7 @@ class PersonaSettingsScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

@@ -69,4 +69,17 @@ class AppTypography {
     letterSpacing: -0.2,
     color: AppColors.primaryContainer,
   );
-}
+
+  /// Scales any text style modestly depending on the active breakpoint
+  /// (+4% on Medium tablet, +10% on Expanded desktop)
+  static TextStyle scaled(BuildContext context, TextStyle baseStyle) {
+    final width = MediaQuery.of(context).size.width;
+    double factor = 1.0;
+    if (width > 1024) {
+      factor = 1.10;
+    } else if (width >= 600) {
+      factor = 1.04;
+    }
+    if (factor == 1.0 || baseStyle.fontSize == null) return baseStyle;
+    return baseStyle.copyWith(fontSize: baseStyle.fontSize! * factor);
+  }

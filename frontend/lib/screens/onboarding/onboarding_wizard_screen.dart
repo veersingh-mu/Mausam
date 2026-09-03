@@ -5,6 +5,8 @@ import '../../core/theme/app_typography.dart';
 import '../../models/persona_type.dart';
 import '../../models/onboarding_model.dart';
 import '../../state/user_persona_provider.dart';
+import '../../core/responsive/responsive_breakpoints.dart';
+import '../../core/responsive/responsive_layout.dart';
 
 class OnboardingWizardScreen extends ConsumerStatefulWidget {
   const OnboardingWizardScreen({Key? key}) : super(key: key);
@@ -150,27 +152,33 @@ class _OnboardingWizardScreenState extends ConsumerState<OnboardingWizardScreen>
             minHeight: 4,
           ),
 
-          // 4-Step PageView
+          // 4-Step PageView centered with max width on desktop
           Expanded(
-            child: PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              onPageChanged: (idx) {
-                setState(() {
-                  _currentStep = idx;
-                });
-              },
-              children: [
-                _buildScreen1Welcome(),
-                _buildScreen2PersonaGrid(),
-                _buildScreen3LocationSetup(),
-                _buildScreen4Summary(),
-              ],
+            child: ResponsiveContainer(
+              maxWidth: 900,
+              child: PageView(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged: (idx) {
+                  setState(() {
+                    _currentStep = idx;
+                  });
+                },
+                children: [
+                  _buildScreen1Welcome(),
+                  _buildScreen2PersonaGrid(),
+                  _buildScreen3LocationSetup(),
+                  _buildScreen4Summary(),
+                ],
+              ),
             ),
           ),
 
-          // Bottom Action Navigation Bar
-          _buildBottomAction(),
+          // Bottom Action Navigation Bar constrained for desktop
+          ResponsiveContainer(
+            maxWidth: 900,
+            child: _buildBottomAction(),
+          ),
         ],
       ),
     );
@@ -305,12 +313,22 @@ class _OnboardingWizardScreenState extends ConsumerState<OnboardingWizardScreen>
           ),
           const SizedBox(height: 16),
 
-          // 8 Tappable Persona Tiles
+          // 8 Tappable Persona Tiles with responsive 2/3/4 columns
           Expanded(
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.15,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: ResponsiveBreakpoints.gridColumns(
+                  context,
+                  compact: 2,
+                  medium: 3,
+                  expanded: 4,
+                ),
+                childAspectRatio: ResponsiveBreakpoints.value(
+                  context,
+                  compact: 1.15,
+                  medium: 1.10,
+                  expanded: 1.12,
+                ),
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
@@ -319,32 +337,34 @@ class _OnboardingWizardScreenState extends ConsumerState<OnboardingWizardScreen>
                 final p = allPersonas[index];
                 final isSelected = _selectedPersonas.contains(p);
 
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                  transform: Matrix4.diagonal3Values(
-                    isSelected ? 1.0 : 0.98,
-                    isSelected ? 1.0 : 0.98,
-                    1.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isSelected ? p.color.withOpacity(0.08) : AppColors.surfaceContainerLowest,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: isSelected ? p.color : AppColors.outlineVariant,
-                      width: isSelected ? 2.2 : 1.0,
+                return MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    transform: Matrix4.diagonal3Values(
+                      isSelected ? 1.0 : 0.98,
+                      isSelected ? 1.0 : 0.98,
+                      1.0,
                     ),
-                    boxShadow: isSelected
-                        ? [
-                            BoxShadow(
-                              color: p.color.withOpacity(0.18),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ]
-                        : null,
-                  ),
-                  child: InkWell(
+                    decoration: BoxDecoration(
+                      color: isSelected ? p.color.withOpacity(0.08) : AppColors.surfaceContainerLowest,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isSelected ? p.color : AppColors.outlineVariant,
+                        width: isSelected ? 2.2 : 1.0,
+                      ),
+                      boxShadow: isSelected
+                          ? [
+                              BoxShadow(
+                                color: p.color.withOpacity(0.18),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: InkWell(
                     borderRadius: BorderRadius.circular(16),
                     onTap: () => _toggleTile(p),
                     child: Padding(
@@ -407,7 +427,8 @@ class _OnboardingWizardScreenState extends ConsumerState<OnboardingWizardScreen>
                       ),
                     ),
                   ),
-                );
+                ),
+              );
               },
             ),
           ),
