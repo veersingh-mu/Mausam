@@ -9,6 +9,8 @@ from sqlalchemy import Column, String, Integer, Boolean, DateTime, JSON, Foreign
 
 logger = logging.getLogger("mausam.db")
 
+from sqlalchemy.engine.url import make_url
+
 is_serverless = bool(
     os.getenv("VERCEL") 
     or os.getenv("VERCEL_ENV")
@@ -19,17 +21,29 @@ is_serverless = bool(
 
 default_db = "sqlite+aiosqlite:////tmp/mausam_local.db" if is_serverless else "sqlite+aiosqlite:///./mausam_local.db"
 
-DATABASE_URL = os.getenv("DATABASE_URL", default_db)
+raw_db_url = (os.getenv("DATABASE_URL") or "").strip()
+
+# Check for empty, placeholder, or keyword strings
+if not raw_db_url or raw_db_url.lower() in ("none", "undefined", "null", "your_weather_api_key_here") or "your_" in raw_db_url:
+    DATABASE_URL = default_db
+else:
+    # Normalize Postgres prefixes
+    if raw_db_url.startswith("postgres://"):
+        raw_db_url = raw_db_url.replace("postgres://", "postgresql+asyncpg://", 1)
+    elif raw_db_url.startswith("postgresql://") and "+asyncpg" not in raw_db_url:
+        raw_db_url = raw_db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
+    # Validate that SQLAlchemy can parse it
+    try:
+        make_url(raw_db_url)
+        DATABASE_URL = raw_db_url
+    except Exception as e:
+        logger.warning(f"Invalid DATABASE_URL ('{raw_db_url}'): {e}. Falling back to default: {default_db}")
+        DATABASE_URL = default_db
 
 # If in serverless and local sqlite path is given, redirect to writable /tmp
 if is_serverless and "sqlite" in DATABASE_URL and not DATABASE_URL.startswith("sqlite+aiosqlite:////tmp/"):
     DATABASE_URL = "sqlite+aiosqlite:////tmp/mausam_local.db"
-
-# If using PostgreSQL in docker/production, postgresql+asyncpg://...
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
-elif DATABASE_URL.startswith("postgresql://") and "+asyncpg" not in DATABASE_URL:
-    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
 
 connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
 

@@ -1,5 +1,6 @@
 import sys
 import os
+from typing import Optional
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 backend_dir = os.path.abspath(os.path.join(current_dir, "../.."))
@@ -39,14 +40,28 @@ app.include_router(alerts.router)
 
 STATIC_INDEX_PATH = os.path.join(os.path.dirname(__file__), "static", "index.html")
 
+def get_static_dashboard_html() -> Optional[str]:
+    search_paths = [
+        STATIC_INDEX_PATH,
+        os.path.join(os.getcwd(), "backend", "api_gateway", "app", "static", "index.html"),
+        os.path.join(repo_root, "backend", "api_gateway", "app", "static", "index.html"),
+    ]
+    for p in search_paths:
+        if os.path.exists(p):
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    return f.read()
+            except Exception as e:
+                print(f"Static read error for {p}: {e}")
+    return None
+
 @app.get("/", response_class=HTMLResponse)
+@app.get("/api", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/api/index.py", response_class=HTMLResponse, include_in_schema=False)
 async def serve_root_dashboard():
-    if os.path.exists(STATIC_INDEX_PATH):
-        try:
-            with open(STATIC_INDEX_PATH, "r", encoding="utf-8") as f:
-                return HTMLResponse(content=f.read())
-        except Exception as e:
-            print(f"Static read error: {e}")
+    content = get_static_dashboard_html()
+    if content:
+        return HTMLResponse(content=content)
     return HTMLResponse(content="<h1>Mausam API Gateway Online</h1><p>Visit <a href='/docs'>/docs</a> for Swagger UI.</p>")
 
 @app.get("/health")

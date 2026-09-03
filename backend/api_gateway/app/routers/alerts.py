@@ -13,6 +13,7 @@ adapter = IMDAlertsAdapter()
 fcm_client = FCMClient()
 
 @router.get("", response_model=List[SevereAlert])
+@router.get("/active", response_model=List[SevereAlert])
 async def get_alerts(
     lat: float = Query(28.6139, description="Latitude"),
     lon: float = Query(77.2090, description="Longitude")

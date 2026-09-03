@@ -26,5 +26,8 @@ dependencies = [
 where = ["."]
 include = ["backend*", "api*"]
 
+[tool.setuptools.package-data]
+"*" = ["*.html", "*.css", "*.js", "*.json", "*.png", "*.jpg", "*.svg"]
 
-
+[tool.vercel]
+entrypoint = "api.index:app"
