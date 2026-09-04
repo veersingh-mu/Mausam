@@ -12,6 +12,7 @@ final currentUserIdProvider = StateProvider<String>((ref) {
 });
 
 final currentLocationProvider = StateProvider<WeatherLocation>((ref) {
+  print('[DIAGNOSTIC 2 - INIT] currentLocationProvider initialized: "New Delhi, India" (28.6139, 77.2090)');
   return WeatherLocation(
     name: 'New Delhi, India',
     latitude: 28.6139,
@@ -19,10 +20,12 @@ final currentLocationProvider = StateProvider<WeatherLocation>((ref) {
   );
 });
 
-final homepageFeedProvider = FutureProvider.autoDispose<HomepageFeedResponse>((ref) async {
+/// Parameterized feed provider keyed by WeatherLocation for offline-first per-city caching
+final homepageFeedFamilyProvider = FutureProvider.family<HomepageFeedResponse, WeatherLocation>((ref, location) async {
   final client = ref.watch(apiClientProvider);
   final userId = ref.watch(currentUserIdProvider);
-  final location = ref.watch(currentLocationProvider);
+
+  print('[DIAGNOSTIC 3] homepageFeedFamilyProvider fetching for: "${location.name}" (lat: ${location.latitude}, lon: ${location.longitude}) user_id: $userId');
 
   return client.fetchHomepageFeed(
     userId: userId,
@@ -30,6 +33,12 @@ final homepageFeedProvider = FutureProvider.autoDispose<HomepageFeedResponse>((r
     lon: location.longitude,
     locationName: location.name,
   );
+});
+
+/// Shared active homepage feed provider driven by watching currentLocationProvider
+final homepageFeedProvider = FutureProvider<HomepageFeedResponse>((ref) async {
+  final location = ref.watch(currentLocationProvider);
+  return ref.watch(homepageFeedFamilyProvider(location).future);
 });
 
 class PersonaNotifier extends StateNotifier<List<PersonaType>> {

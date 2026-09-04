@@ -1,14 +1,24 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../../models/homepage_feed_response.dart';
 import '../../models/persona_type.dart';
 import '../../models/alert_model.dart';
 
 class ApiClient {
-  static const String defaultBaseUrl = 'http://localhost:8000';
+  static String get defaultBaseUrl {
+    if (kIsWeb) {
+      final origin = Uri.base.origin;
+      if (origin.startsWith('http') && !origin.contains('localhost') && !origin.contains('127.0.0.1')) {
+        return origin;
+      }
+    }
+    return 'http://localhost:8000';
+  }
+
   final String baseUrl;
 
-  ApiClient({this.baseUrl = defaultBaseUrl});
+  ApiClient({String? baseUrl}) : baseUrl = baseUrl ?? defaultBaseUrl;
 
   Future<HomepageFeedResponse> fetchHomepageFeed({
     required String userId,
@@ -25,10 +35,13 @@ class ApiClient {
       },
     );
 
+    print('[DIAGNOSTIC 3b] ApiClient sending HTTP GET: $uri (lat: $lat, lon: $lon, location_name: "$locationName")');
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final jsonMap = jsonDecode(response.body);
-      return HomepageFeedResponse.fromJson(jsonMap);
+      final feedResponse = HomepageFeedResponse.fromJson(jsonMap);
+      print('[DIAGNOSTIC 6 - Frontend ApiClient] Received response for: "${feedResponse.location.name}" (lat: ${feedResponse.location.latitude}, lon: ${feedResponse.location.longitude}), temp: ${feedResponse.current.temperatureC}°C, cards: ${feedResponse.cards.length}');
+      return feedResponse;
     } else {
       throw Exception('Failed to load homepage feed: ${response.statusCode}');
     }

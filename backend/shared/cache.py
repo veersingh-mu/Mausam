@@ -96,16 +96,20 @@ class CacheManager:
         """
         rounded_lat = round(lat, precision)
         rounded_lon = round(lon, precision)
-        return f"{prefix}:{rounded_lat}:{rounded_lon}"
+        key = f"{prefix}:{rounded_lat}:{rounded_lon}"
+        print(f"[DIAGNOSTIC 5] CacheManager.make_geo_key generated key: '{key}' (lat={lat}, lon={lon})", flush=True)
+        return key
 
     async def get_json(self, key: str) -> Optional[Any]:
         try:
             client = await self.get_client()
             raw = await client.get(key)
             if raw:
+                print(f"[DIAGNOSTIC 5] Cache HIT for key: '{key}'", flush=True)
                 return json.loads(raw)
+            print(f"[DIAGNOSTIC 5] Cache MISS for key: '{key}'", flush=True)
         except Exception as e:
-            logger.error(f"Cache get error for key '{key}': {e}")
+            logger.warning(f"Cache get error for {key}: {e}")
         return None
 
     async def set_json(self, key: str, value: Any, ttl_seconds: int = 300) -> bool:

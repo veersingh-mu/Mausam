@@ -17,184 +17,172 @@
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
 
-  <!-- Government Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-[#1A237E] flex items-center justify-center text-white font-black text-xl shadow-md shadow-indigo-900/20">
+  <!-- Government Header (Compact Mobile-Optimized) -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#1A237E] flex items-center justify-center text-white font-black text-base sm:text-lg shadow-sm">
           M
         </div>
         <div>
-          <div class="flex items-center space-x-2">
-            <h1 class="text-xl font-bold text-[#1A237E] tracking-tight">MAUSAM</h1>
-            <span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">IMD Live</span>
+          <div class="flex items-center space-x-1.5">
+            <h1 class="text-base sm:text-lg font-extrabold text-[#1A237E] tracking-tight leading-tight">MAUSAM</h1>
+            <span class="hidden sm:inline-block bg-blue-100 text-blue-800 text-[9px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider">IMD Live</span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">India Meteorological Department • Ministry of Earth Sciences</p>
+          <p class="hidden sm:block text-[11px] text-slate-500 font-medium leading-none">India Meteorological Department • MoES</p>
         </div>
       </div>
-      <div class="flex items-center space-x-3">
-        <button onclick="openSearchModal()" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-[#1A237E] font-bold text-xs transition border border-indigo-200 shadow-xs">
-          <span class="material-symbols-outlined text-sm">search</span>
-          <span>Search City</span>
+      <div class="flex items-center space-x-1.5 sm:space-x-2">
+        <button onclick="openOnboardingModal()" title="Personalization Wizard" aria-label="Personalization Wizard" class="min-h-[44px] min-w-[44px] px-2.5 sm:px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-[#1A237E] font-bold text-xs transition flex items-center justify-center space-x-1 border border-indigo-200/70">
+          <span class="material-symbols-outlined text-base text-indigo-700">auto_awesome</span>
+          <span class="hidden md:inline">Wizard</span>
         </button>
-        <button onclick="openOnboardingModal()" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition shadow-sm">
-          <span class="material-symbols-outlined text-sm">auto_awesome</span>
-          <span>Onboarding Wizard</span>
+        <button onclick="openAboutModal()" title="About Architecture & Project" aria-label="About Architecture & Project" class="min-h-[44px] min-w-[44px] px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition flex items-center justify-center space-x-1 border border-slate-200">
+          <span class="material-symbols-outlined text-base">info</span>
+          <span class="hidden md:inline">About</span>
         </button>
-        <a href="/docs" target="_blank" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-[#1A237E] font-semibold text-xs transition">
+        <a href="/docs" target="_blank" class="hidden lg:inline-flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 font-semibold text-xs border border-slate-200">
           <span class="material-symbols-outlined text-sm">api</span>
-          <span>Swagger Docs</span>
+          <span>Docs</span>
         </a>
-        <a href="/health" target="_blank" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 font-semibold text-xs">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Live Online</span>
-        </a>
+        <div class="hidden sm:flex items-center space-x-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-[11px] border border-emerald-200/60">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Online</span>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="imd-gradient text-white py-10 px-4 shadow-inner">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-        <div class="lg:col-span-2 space-y-4">
-          <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold">
-            <span class="material-symbols-outlined text-xs text-amber-300">bolt</span>
-            <span>Real-time Microservices Architecture with Redis Caching</span>
+  <!-- Hero Section: Weather Data Immediately Above the Fold, Search Below -->
+  <section class="imd-gradient text-white py-3.5 sm:py-6 px-3 sm:px-6 shadow-inner">
+    <div class="max-w-4xl lg:max-w-5xl mx-auto space-y-2.5 sm:space-y-3">
+      
+      <!-- Current Flagship Card (Renders Immediately Above the Fold on all mobile viewports) -->
+      <div onclick="openSearchModal()" onkeydown="if(event.key==='Enter'||event.key===' ')openSearchModal()" role="button" tabindex="0" aria-label="Weather overview for selected city. Tap to search or change city." class="cursor-pointer bg-white/10 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/50 transition backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 text-white shadow-xl flex flex-col justify-between group">
+        <!-- Card Header: Location & Accessible Change City Button (Min 44px Touch Target) -->
+        <div class="flex items-center justify-between pb-2.5 border-b border-white/10 gap-2">
+          <div class="flex items-center space-x-1.5 min-w-0 flex-1 pr-1">
+            <span class="material-symbols-outlined text-sm text-indigo-200 flex-shrink-0" aria-hidden="true">location_on</span>
+            <p class="text-xs sm:text-sm font-bold text-indigo-200 uppercase tracking-wider truncate" id="loc-name">New Delhi, India</p>
           </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Personalized Weather Feed & Microservices Engine</h2>
-          <p class="text-indigo-100 text-sm sm:text-base max-w-2xl leading-relaxed">
-            Real-time lifestyle meteorological insights tailored for 8 specialized personas (Health, Fitness, Marine, Travel, Family, Agriculture, Commute, Events).
-          </p>
+          <button type="button" onclick="event.stopPropagation(); openSearchModal();" aria-label="Change City" class="min-h-[44px] min-w-[44px] bg-white/20 group-hover:bg-white/30 active:scale-95 px-3 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center justify-center space-x-1 transition shadow-2xs flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-white/60">
+            <span class="material-symbols-outlined text-sm" aria-hidden="true">search</span>
+            <span>Change City</span>
+          </button>
+        </div>
 
-          <!-- Search Bar Entry Point Pill -->
-          <div onclick="openSearchModal()" class="cursor-pointer max-w-lg p-3 bg-white/15 hover:bg-white/25 backdrop-blur-md rounded-2xl border border-white/30 flex items-center justify-between shadow-lg transition">
-            <div class="flex items-center space-x-3">
-              <span class="material-symbols-outlined text-white text-xl">search</span>
-              <span class="text-xs sm:text-sm font-medium text-white/90">Search city in India...</span>
-            </div>
-            <span class="text-[10px] font-extrabold bg-white/20 text-white px-2 py-0.5 rounded-md uppercase tracking-wider">35+ Cities</span>
+        <!-- Card Middle: Responsive Temperature + Fluid Condition + Scaled Icon -->
+        <div class="flex items-center justify-between py-2 sm:py-3 gap-2">
+          <div class="min-w-0 flex-1">
+            <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-none" id="temp-display">30°C</h2>
+            <p class="text-xs sm:text-sm text-indigo-100 mt-1 font-medium leading-snug break-words max-w-[220px] sm:max-w-none" id="cond-text">Partially cloudy • Feels like 38°C</p>
           </div>
-
-          <div class="pt-1 flex flex-wrap gap-2 items-center">
-            <span class="text-xs text-indigo-200 font-semibold mr-1">Quick:</span>
-            <button onclick="fetchFeed('New Delhi', 28.6139, 77.2090)" class="px-3 py-1.5 rounded-lg bg-white text-[#1A237E] font-bold text-xs shadow-md hover:bg-indigo-50 transition">📍 New Delhi</button>
-            <button onclick="fetchFeed('Mumbai Coast', 18.9220, 72.8347)" class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm transition">🌊 Mumbai</button>
-            <button onclick="fetchFeed('Bengaluru', 12.9716, 77.5946)" class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm transition">🌳 Bengaluru</button>
-            <button onclick="fetchFeed('Ludhiana Agri', 30.9010, 75.8573)" class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm transition">🌾 Punjab</button>
-            <button onclick="simulateAlert()" class="px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs shadow transition flex items-center space-x-1">
-              <span class="material-symbols-outlined text-xs">warning</span>
-              <span>Test Alert</span>
-            </button>
+          <!-- Dedicated Fixed Weather Icon Container -->
+          <div id="weather-hero-icon" class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 flex items-center justify-center filter drop-shadow-md" aria-hidden="true">
+            <!-- Rendered dynamically with SVG via getWeatherIconSvg -->
           </div>
         </div>
 
-        <!-- Current Flagship Card (Fully Responsive & Mobile Optimized) -->
-        <div onclick="openSearchModal()" onkeydown="if(event.key==='Enter'||event.key===' ')openSearchModal()" role="button" tabindex="0" aria-label="Weather overview for selected city. Tap to search or change city." class="cursor-pointer bg-white/10 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/50 transition backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-white shadow-xl flex flex-col justify-between group">
-          <!-- Card Header: Location & Accessible Change City Button (Zero Overlap, Min 44px Touch Target) -->
-          <div class="flex items-center justify-between pb-3 border-b border-white/10 gap-2">
-            <div class="flex items-center space-x-1.5 min-w-0 flex-1 pr-1">
-              <span class="material-symbols-outlined text-sm text-indigo-200 flex-shrink-0" aria-hidden="true">location_on</span>
-              <p class="text-xs sm:text-sm font-bold text-indigo-200 uppercase tracking-wider truncate" id="loc-name">New Delhi, India</p>
-            </div>
-            <button type="button" onclick="event.stopPropagation(); openSearchModal();" aria-label="Change City" class="min-h-[44px] min-w-[44px] bg-white/20 group-hover:bg-white/30 active:scale-95 px-3 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center justify-center space-x-1.5 transition shadow-2xs flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-white/60">
-              <span class="material-symbols-outlined text-sm" aria-hidden="true">search</span>
-              <span>Change City</span>
-            </button>
+        <!-- Card Bottom: Environmental Stats Row (3-Col, No Overlap on 320px) -->
+        <div class="grid grid-cols-3 divide-x divide-white/10 pt-2.5 border-t border-white/10 text-center">
+          <div class="px-1 min-w-0">
+            <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">Humidity</p>
+            <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="humidity-text">82%</p>
           </div>
-
-          <!-- Card Middle: Responsive Temperature + Fluid Condition + Centered Scaled Icon -->
-          <div class="flex items-center justify-between py-3 sm:py-4 gap-2">
-            <div class="min-w-0 flex-1">
-              <h3 class="text-[clamp(2.25rem,7vw,3.25rem)] font-extrabold tracking-tight leading-none" id="temp-display">30°C</h3>
-              <p class="text-xs sm:text-sm text-indigo-100 mt-1.5 font-medium leading-snug break-words max-w-[200px] sm:max-w-none" id="cond-text">Partially cloudy • Feels like 38°C</p>
-            </div>
-            <!-- Dedicated Fixed Weather Icon Container (48px-64px scalable, perfectly centered, never clipped) -->
-            <div id="weather-hero-icon" class="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 flex-shrink-0 flex items-center justify-center filter drop-shadow-md" aria-hidden="true">
-              <!-- Rendered dynamically with SVG via getWeatherIconSvg -->
-            </div>
+          <div class="px-1 min-w-0">
+            <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">Wind</p>
+            <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="wind-text">12.5 km/h</p>
           </div>
-
-          <!-- Card Bottom: Environmental Stats Row (Evenly Distributed 3-Col, No Overlap on 320px) -->
-          <div class="grid grid-cols-3 divide-x divide-white/10 pt-3 border-t border-white/10 text-center">
-            <div class="px-1 min-w-0">
-              <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">Humidity</p>
-              <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="humidity-text">82%</p>
-            </div>
-            <div class="px-1 min-w-0">
-              <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">Wind</p>
-              <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="wind-text">12.5 km/h</p>
-            </div>
-            <div class="px-1 min-w-0">
-              <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">UV Index</p>
-              <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="uv-text">6.8</p>
-            </div>
+          <div class="px-1 min-w-0">
+            <p class="text-[10px] sm:text-xs text-indigo-200 uppercase tracking-wider font-semibold truncate">UV Index</p>
+            <p class="text-xs sm:text-sm font-bold text-white mt-0.5 truncate" id="uv-text">6.8</p>
           </div>
         </div>
       </div>
+
+      <!-- Single Search Entry Point & Clean Quick City Chips (Moved Below Weather Card) -->
+      <div class="space-y-2 pt-0.5">
+        <!-- Search Bar Entry Point Pill -->
+        <div onclick="openSearchModal()" role="button" tabindex="0" aria-label="Search city in India" onkeydown="if(event.key==='Enter'||event.key===' ')openSearchModal()" class="cursor-pointer w-full p-2.5 sm:p-3 bg-white/15 hover:bg-white/20 active:scale-[0.99] backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/25 flex items-center justify-between shadow-sm transition min-h-[44px]">
+          <div class="flex items-center space-x-2.5">
+            <span class="material-symbols-outlined text-white/90 text-lg sm:text-xl">search</span>
+            <span class="text-xs sm:text-sm font-medium text-white/90">Search 35+ Indian cities...</span>
+          </div>
+          <span class="text-[10px] font-extrabold bg-white/20 text-white px-2 py-0.5 rounded-md uppercase tracking-wider">35+ Cities</span>
+        </div>
+
+        <!-- Clean Quick City Chips (Limited to 4 popular cities, Debug Test Alert removed) -->
+        <div class="flex flex-wrap gap-1.5 sm:gap-2 items-center">
+          <span class="text-[11px] sm:text-xs text-indigo-200 font-semibold mr-0.5">Quick:</span>
+          <button onclick="fetchFeed('New Delhi', 28.6139, 77.2090)" class="min-h-[40px] px-3 py-1.5 rounded-lg bg-white text-[#1A237E] font-bold text-xs shadow hover:bg-indigo-50 active:scale-95 transition flex items-center">📍 New Delhi</button>
+          <button onclick="fetchFeed('Mumbai Coast', 18.9220, 72.8347)" class="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm active:scale-95 transition flex items-center">🌊 Mumbai</button>
+          <button onclick="fetchFeed('Bengaluru', 12.9716, 77.5946)" class="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm active:scale-95 transition flex items-center">🌳 Bengaluru</button>
+          <button onclick="fetchFeed('Ludhiana Agri', 30.9010, 75.8573)" class="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-semibold text-xs backdrop-blur-sm active:scale-95 transition flex items-center">🌾 Punjab</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- Live Alert Toast Area -->
-  <div id="alert-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 hidden">
-    <div class="bg-rose-50 border-2 border-rose-500/50 rounded-2xl p-4 flex items-start space-x-3 shadow-lg">
-      <span class="material-symbols-outlined text-rose-600 text-2xl animate-bounce">warning</span>
-      <div class="flex-1">
+  <div id="alert-container" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mt-4 hidden">
+    <div class="bg-rose-50 border-2 border-rose-500/50 rounded-2xl p-3.5 sm:p-4 flex items-start space-x-3 shadow-lg">
+      <span class="material-symbols-outlined text-rose-600 text-2xl animate-bounce flex-shrink-0">warning</span>
+      <div class="flex-1 min-w-0">
         <div class="flex items-center space-x-2">
           <span class="bg-rose-600 text-white text-[10px] font-black px-2 py-0.5 rounded">LIVE ALERT</span>
-          <h4 class="font-bold text-rose-900 text-sm" id="alert-title">Severe Weather Warning</h4>
+          <h4 class="font-bold text-rose-900 text-xs sm:text-sm truncate" id="alert-title">Severe Weather Warning</h4>
         </div>
-        <p class="text-xs text-rose-700 mt-1" id="alert-desc"></p>
+        <p class="text-xs text-rose-700 mt-1 leading-snug break-words" id="alert-desc"></p>
       </div>
-      <button onclick="document.getElementById('alert-container').classList.add('hidden')" class="text-rose-400 hover:text-rose-600 text-sm font-bold">&times;</button>
+      <button onclick="document.getElementById('alert-container').classList.add('hidden')" aria-label="Dismiss Alert" class="text-rose-400 hover:text-rose-600 text-lg font-bold min-h-[36px] min-w-[36px] flex items-center justify-center">&times;</button>
     </div>
   </div>
 
   <!-- In-App Persona Toggle Ribbon -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
+  <section class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+    <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 shadow-xs">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3 pb-2.5 border-b border-slate-100">
         <div>
-          <div class="flex items-center space-x-2">
-            <span class="material-symbols-outlined text-indigo-700 text-lg">tune</span>
-            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide">In-App Persona Toggle System</h3>
+          <div class="flex items-center space-x-1.5">
+            <span class="material-symbols-outlined text-indigo-700 text-base sm:text-lg">tune</span>
+            <h3 class="text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wide">In-App Persona Toggle System</h3>
           </div>
-          <p class="text-xs text-slate-500 mt-0.5">Toggle personas on/off anytime — homepage cards re-render instantly without full reload</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Toggle personas on/off anytime — cards re-render instantly</p>
         </div>
         <div class="flex items-center space-x-2">
-          <span id="active-persona-badge" class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full font-bold text-xs">4 Active</span>
-          <button onclick="openOnboardingModal()" class="text-xs text-indigo-600 hover:underline font-semibold">Run Onboarding</button>
+          <span id="active-persona-badge" class="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 rounded-full font-bold text-[11px]">4 Active</span>
+          <button onclick="openOnboardingModal()" class="text-[11px] text-indigo-600 hover:underline font-semibold min-h-[36px] flex items-center">Run Wizard</button>
         </div>
       </div>
 
       <!-- 8 Live Toggles -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5" id="persona-toggle-bar">
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2" id="persona-toggle-bar">
         <!-- Generated Dynamically -->
       </div>
     </div>
   </section>
 
   <!-- Main Dynamic Feed Section -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
-    <div class="mb-4 flex items-center justify-between">
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 w-full">
+    <div class="mb-3.5 flex items-center justify-between">
       <div>
-        <h3 class="text-base font-bold text-slate-800">Your Active Weather Modules</h3>
-        <p class="text-xs text-slate-500">Live cards populated dynamically for your selected personas</p>
+        <h3 class="text-sm sm:text-base font-bold text-slate-800">Your Active Weather Modules</h3>
+        <p class="text-[11px] sm:text-xs text-slate-500">Live cards populated dynamically for your selected personas</p>
       </div>
-      <div class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg flex items-center space-x-1.5">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span id="feed-status-text">Feed Synchronized</span>
+      <div class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center space-x-1.5 border border-emerald-200/50">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="feed-status-text">Feed Synced</span>
       </div>
     </div>
 
     <!-- Cards Grid -->
-    <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
       <!-- Loading Skeleton -->
-      <div class="bg-white rounded-2xl border border-slate-200 p-6 animate-pulse space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 animate-pulse space-y-3">
         <div class="h-4 bg-slate-200 rounded w-1/3"></div>
         <div class="h-8 bg-slate-200 rounded w-1/2"></div>
         <div class="h-16 bg-slate-100 rounded"></div>
-      </div>
     </div>
   </main>
 
@@ -306,6 +294,73 @@
     </div>
   </div>
 
+  <!-- About This Project Modal (Preserves architecture & hackathon context) -->
+  <div id="about-modal" onclick="if(event.target===this)closeAboutModal()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-xl bg-[#1A237E] text-white flex items-center justify-center font-black text-sm">M</div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm">About Mausam Platform</h3>
+            <p class="text-[11px] text-slate-500 font-medium">India Meteorological Department (IMD) • MoES</p>
+          </div>
+        </div>
+        <button onclick="closeAboutModal()" aria-label="Close modal" class="w-8 h-8 rounded-full bg-slate-200/70 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-lg">&times;</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 overflow-y-auto flex-1 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+        <div class="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-200/80 px-3 py-1 rounded-full text-xs font-semibold text-indigo-900">
+          <span class="material-symbols-outlined text-xs text-amber-600">bolt</span>
+          <span>Real-time Microservices Architecture with Redis Caching</span>
+        </div>
+
+        <div>
+          <h4 class="text-base font-extrabold text-slate-900">Personalized Weather Feed & Microservices Engine</h4>
+          <p class="text-xs text-slate-600 mt-1">
+            Real-time lifestyle meteorological insights tailored for 8 specialized personas: Health-Conscious, Fitness Enthusiast, Marine & Beachgoer, Traveler, Family & Parents, Agriculture, Daily Commuters, and Event Planners.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="font-bold text-indigo-900 block text-xs">⚡ Geo-Grid Redis Caching</span>
+            <span class="text-[11px] text-slate-500 mt-0.5 block">Sub-10ms response times for high-density metropolitan coordinates</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="font-bold text-indigo-900 block text-xs">🔔 WebSocket Push Alerts</span>
+            <span class="text-[11px] text-slate-500 mt-0.5 block">Sub-second severe weather alerts for cyclones, squalls and heatwaves</span>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100">
+          <h5 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">Developer & Evaluation Tools</h5>
+          <div class="flex flex-wrap gap-2">
+            <a href="/docs" target="_blank" class="px-3 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-[#1A237E] font-bold text-xs transition border border-indigo-200 flex items-center space-x-1.5">
+              <span class="material-symbols-outlined text-sm">api</span>
+              <span>Open Swagger Docs</span>
+            </a>
+            <a href="/health" target="_blank" class="px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs transition border border-emerald-200 flex items-center space-x-1.5">
+              <span class="material-symbols-outlined text-sm">check_circle</span>
+              <span>Gateway Health Check</span>
+            </a>
+            <button onclick="simulateAlert(); closeAboutModal();" class="px-3 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-xs transition border border-rose-200 flex items-center space-x-1.5">
+              <span class="material-symbols-outlined text-sm text-rose-600">warning</span>
+              <span>Test Severe Alert Simulation</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-3 border-t border-slate-100 bg-slate-50 flex justify-end">
+        <button onclick="closeAboutModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="bg-white border-t border-slate-200 py-6 mt-8">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
@@ -315,6 +370,12 @@
   </footer>
 
   <script>
+    function openAboutModal() {
+      document.getElementById('about-modal').classList.remove('hidden');
+    }
+    function closeAboutModal() {
+      document.getElementById('about-modal').classList.add('hidden');
+    }
     const API_BASE = window.location.origin;
     const USER_ID = 'citizen_delhi_01';
 
@@ -1234,6 +1295,15 @@
         }
       };
     } catch (_) {}
+
+    // Global keyboard shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (typeof closeSearchModal === 'function') closeSearchModal();
+        if (typeof closeOnboardingModal === 'function') closeOnboardingModal();
+        if (typeof closeAboutModal === 'function') closeAboutModal();
+      }
+    });
 
     // Init
     renderToggleBar();

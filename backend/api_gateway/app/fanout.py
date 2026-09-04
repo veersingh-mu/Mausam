@@ -271,12 +271,21 @@ class FanoutCoordinator:
         # Current flagship weather conditions from live adapter
         current_conditions = await core_adapter.fetch_current_conditions(lat, lon)
 
+        print(f"[DIAGNOSTIC 6 - Backend] Returning feed for location: '{location_name}' ({lat}, {lon}), temp: {current_conditions.temperature_c}°C, cards: {len(ordered_cards)}", flush=True)
+
+        loc_state = None
+        if "," in location_name:
+            parts = [p.strip() for p in location_name.split(",")]
+            if len(parts) >= 2:
+                loc_state = parts[1]
+
         return HomepageFeedResponse(
             user_id=user_id,
             location=WeatherLocation(
                 name=location_name,
                 latitude=lat,
-                longitude=lon
+                longitude=lon,
+                state=loc_state or "India"
             ),
             current=current_conditions,
             alerts=alerts,

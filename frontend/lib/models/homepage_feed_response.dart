@@ -26,6 +26,18 @@ class WeatherLocation {
       country: json['country'] ?? 'India',
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is WeatherLocation &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          latitude == other.latitude &&
+          longitude == other.longitude;
+
+  @override
+  int get hashCode => name.hashCode ^ latitude.hashCode ^ longitude.hashCode;
 }
 
 class CurrentConditions {

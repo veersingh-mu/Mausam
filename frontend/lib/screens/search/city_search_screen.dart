@@ -81,6 +81,7 @@ class _CitySearchScreenState extends ConsumerState<CitySearchScreen> {
   }
 
   void _onCitySelected(CityModel city) async {
+    print('[DIAGNOSTIC 1] City selected in CitySearchScreen: "${city.cityName}, ${city.state}" (lat: ${city.latitude}, lon: ${city.longitude})');
     final searchNotifier = ref.read(citySearchProvider.notifier);
     final success = await searchNotifier.selectCity(city, ref);
 

@@ -118,12 +118,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final feedAsync = ref.watch(homepageFeedProvider);
+    final location = ref.watch(currentLocationProvider);
+    final feedAsync = ref.watch(homepageFeedFamilyProvider(location));
     final activeAlerts = ref.watch(activeAlertsProvider);
     final breakpoint = ResponsiveBreakpoints.of(context);
     final isCompact = breakpoint == ScreenBreakpoint.compact;
     final isMedium = breakpoint == ScreenBreakpoint.medium;
     final isExpanded = breakpoint == ScreenBreakpoint.expanded;
+
+    feedAsync.whenData((feed) {
+      print('[DIAGNOSTIC 6 - Frontend UI] HomeScreen rendered with location: "${feed.location.name}" (${feed.location.latitude}, ${feed.location.longitude}), temp: ${feed.current.temperatureC}°C, cards: ${feed.cards.length}');
+    });
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -143,6 +148,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
+                ref.invalidate(homepageFeedFamilyProvider(location));
                 ref.invalidate(homepageFeedProvider);
               },
               child: feedAsync.when(
@@ -724,7 +730,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Text(err.toString(), style: AppTypography.bodyMd, textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => ref.invalidate(homepageFeedProvider),
+              onPressed: () {
+                final loc = ref.read(currentLocationProvider);
+                ref.invalidate(homepageFeedFamilyProvider(loc));
+                ref.invalidate(homepageFeedProvider);
+              },
               child: const Text('Retry'),
             ),
           ],

@@ -17,12 +17,9 @@ async def get_homepage_feed(
     location_name: str = Query("New Delhi, India", description="Human readable location"),
     db: AsyncSession = Depends(get_db)
 ):
-    """
-    Core API Gateway Fanout Endpoint:
-    Looks up user's persona preferences & layout from PostgreSQL,
-    fans out requests to relevant microservices concurrently,
-    applies card order and visibility filtering, and returns personalized feed.
-    """
+    # [DIAGNOSTIC 4] Log incoming location parameters
+    print(f"[DIAGNOSTIC 4] Backend /homepage-feed received: user_id={user_id}, lat={lat}, lon={lon}, location_name='{location_name}'", flush=True)
+
     # 1. Fetch user's saved personas from DB
     result = await db.execute(
         select(DBUserPersona).where(DBUserPersona.user_id == user_id)

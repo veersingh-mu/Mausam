@@ -173,6 +173,10 @@ class UserPersonaNotifier extends StateNotifier<UserPersonaState> {
     }
   }
 
+  void updatePrimaryLocation(SavedLocationItem location) {
+    state = state.copyWith(primaryLocation: location);
+  }
+
   void addSavedLocation(SavedLocationItem location) {
     final updated = List<SavedLocationItem>.from(state.savedLocations)..add(location);
     state = state.copyWith(savedLocations: updated);

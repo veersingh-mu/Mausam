@@ -138,6 +138,7 @@ class CitySearchNotifier extends StateNotifier<CitySearchState> {
 
   /// Selects a city, updates recents (max 5), and updates active location
   Future<bool> selectCity(CityModel city, WidgetRef ref) async {
+    print('[DIAGNOSTIC 1b] CitySearchNotifier.selectCity called for: "${city.cityName}, ${city.state}" (lat: ${city.latitude}, lon: ${city.longitude})');
     state = state.copyWith(isSelecting: true, errorMessage: null);
 
     try {
@@ -158,9 +159,23 @@ class CitySearchNotifier extends StateNotifier<CitySearchState> {
 
       // 2. Update Riverpod active location
       final newLocation = city.toWeatherLocation();
+      print('[DIAGNOSTIC 2] Updating currentLocationProvider to: "${newLocation.name}" (lat: ${newLocation.latitude}, lon: ${newLocation.longitude})');
       ref.read(currentLocationProvider.notifier).state = newLocation;
 
-      // 3. Invalidate homepage feed to trigger reload with newly selected city
+      // Keep user persona primary location in sync across screens
+      ref.read(userPersonaProvider.notifier).updatePrimaryLocation(
+        SavedLocationItem(
+          name: '${city.cityName}, ${city.state}',
+          latitude: city.latitude,
+          longitude: city.longitude,
+          isPrimary: true,
+          label: city.cityName,
+        ),
+      );
+
+      // 3. Invalidate homepage feed to trigger fresh fetch with newly selected city
+      print('[DIAGNOSTIC 2b] Invalidating homepageFeedProvider & family');
+      ref.invalidate(homepageFeedFamilyProvider(newLocation));
       ref.invalidate(homepageFeedProvider);
 
       return true;
